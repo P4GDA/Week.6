@@ -1,0 +1,253 @@
+---
+title: "6.2 While Loops - Tutorial"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE, warning = TRUE)
+
+library(ottr)
+library(testthat)
+library(dplyr)
+```
+
+---
+
+At the end of this tutorial you should be able to:
+
+* Write a while loop with the correct syntax
+* Loop through vectors
+* Loop through vector indices and data frame rows
+* Modify data structures from within a for loop
+* Determine how to implement a for loop for specific applications
+
+**NOTE: the dplyr package has already been loaded for you**
+
+---
+
+## 6.2.1: Introduction to While Loops
+
+---
+
+Consider the following while loop:
+
+```{r}
+i <- 3
+while (i < 300) {
+  print(i / 3)
+  i <- i * 3
+}
+```
+
+What will the value of `i` be when the while loop stops? Assign the value to a variable called "i_final_value".
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.1.a.R")
+```
+**Check your answer by running the above block** 
+
+If at the *start* of the 3rd iteration (before `print(i/3)`) you looked at the value of the variable `i`, what would it be? Assign your answer to a variable called "i_3rd_iter_start".
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.1.b.R")
+```
+**Check your answer by running the above block** 
+
+If at the *end* of the 3rd iteration (after `i <- i * 3`) you looked at the value of the variable `i`, what would it be? Assign your answer to a variable called "i_3rd_iter_end".
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.1.c.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+The following while loop was intended to add the square root of each number from 1 to 10 to the vector `vect1`, but the loop is infinite. Alter the code to fix the while loop.
+```{r}
+# Modify the code here
+vect1 <- c()
+i <- 1
+while (i < 10) {
+  vect1[i] <- sqrt(i)
+}
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.1.d.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+## 6.2.2: While Loop Techniques
+
+---
+
+A student's heart rate is taken every second for the first minute after they start a quiz. The vector `heart_rate` below shows the heart rate measurements in order: element 1 is their heart rate at second 1, element 2 is their heart at second 2, etc. 
+
+```{r}
+heart_rate <- c(80,82,83,81,83,84,85,84,86,85,86,86,87,88,87,86,88,88,89,90,88,90,91,93,94,92,90,89,89,90,88,87,86,88,89,92,94,93,95,97,97,96,98,98,99,101,101,104,104,105,103,102,102,104,105,105,107,106,105,106)
+```
+
+Write a while loop to find how many seconds it takes for their heart rate to exceed 100 and assign it to a variable called "sec_passes_100". 
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.2.a.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+The Fibonacci sequence is a sequence of numbers in which each number is the sum of the previous two numbers. The following vector contains the first 4 numbers in the Fibonacci Sequence. As you can see, the 3rd number in the sequence is 1, which is the sum of the prior two numbers (0 + 1), and the 4th number in the sequence is 2, which is the sum of the prior two numbers (1 + 1).
+
+```{r}
+fibonacci_sequence <- c(0, 1, 1, 2)
+```
+
+Write a while loop to add numbers to the `fibonacci_sequence` vector until the vector has a length of 15.
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.2.b.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+Split the RNA sequence in `RNA_seq` into codons using a while loop and add each codon to the vector `codons` below. Hint: You should use the `substr()` function!
+```{r}
+RNA_seq <- "AUGGCAUUCCUACGG"
+codons <- c()
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.2.c.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+## 6.2.3: While Loop Applications
+
+---
+
+For the rest of this tutorial we will used data downloaded from ClinVar (https://www.ncbi.nlm.nih.gov/clinvar/), a public database of human gene variants and their associated phenotypes.
+
+The dataset we will use includes all the variants on ClinVar associated with the following 5 diseases:
+
+- Cystic fibrosis
+- Duchenne muscular dystrophy
+- Glaucoma
+- Phenylketonuria
+- Type 2 diabetes mellitus
+
+Upload and view the data set with the code below. A vector called `diseases` has also been created for you to use.
+
+```{r}
+diseases <- c("cystic.fibrosis", "duchenne.muscular.dystrophy", "glaucoma", "pheynlketonuria", "type.2.diabetes")
+clinvar_data <- read.csv("/home/jovyan/Week.6/6.2.While.Loops/Tutorial.6.2/clinvar_data.csv",
+                         stringsAsFactors = FALSE)
+clinvar_data
+```
+
+Each row in the data frame contains one variant with the following information:
+
+- `chromosome`: chromosome the variant is on
+- `position`: exact base position of the variant
+- `disease`: the disease the patient(s) with the variant has(have)
+- `gene`: the gene in which the variant is located
+- `clinical.significance`: defines whether the variant is pathogenic or not, possible values are: "Pathogenic", "Likely_pathogenic", "Benign", "Likely_benign", "Uncertain", "Other"
+
+---
+
+A new column `pathogenic` has been added to the `clinvar_data` data frame below to help us more easily analyze the variants that are pathogenic or likely pathogenic. Fill the column by looping through each row in the data frame and setting the value for that row in the `pathogenic` column to `TRUE` if the `clinical.significance` in that row is "Pathogenic" or "Likely_pathogenic", otherwise set it to `FALSE`.
+```{r}
+clinvar_data$pathogenic <- NA
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.3.a.R")
+```
+**Check your answer by running the above block** 
+
+This question was also completed in the *6.1 For Loops* tutorial. Consider: does it make more sense to use a while loop or a for loop for this task?
+
+---
+
+The DMD gene codes for the Dystrophin protein. Mutations in this gene are the primary cause of Duchenne Muscular Dystrophy. The DMD gene is on chromosome X from base 31,119,222 to 33,211,549 on the negative strand. This means that the start of the gene is at 33,211,549 and the gene ends at 31,119,222. 
+
+Below is a data frame that contains all the variants in the DMD gene, in REVERSE (descending) order based on position (in order from gene start to gene end).
+
+```{r}
+DMD_variants <- clinvar_data %>% filter(clinvar_data$gene == "DMD") %>% arrange(desc(position))
+DMD_variants
+```
+
+What percentage of DMD variants are in the first 25% of bases of the DMD gene?
+
+Using a while loop count the number of variants in the first 25% of the DMD gene (remember the gene starts at 33211549 because it is on the negative strand). Use the result to assign the percentage of DMD variants that in the first 25% of bases of the DMD gene to a variable named "perc_var_in_first_quarter".
+```{r}
+# Write and execute your cod here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.3.b.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+The CFTR gene codes for the Cystic fibrosis transmembrane conductance regulator protein. Create a data frame that contains only the pathogenic and likely pathogenic variants (use the `pathogenic` column) in the CFTR gene, call it "CFTR_pathogenic_variants".
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.3.c.R")
+```
+**Check your answer by running the above block** 
+
+The CFTR gene contains 3 protein domains: 2 ABC transmembrane domains and 1 ABC transporter domain. The CFTR gene is located on chromosome 7 from base 117,480,025 to 117,668,665. The coding sequence for the ABC transporter domain is located on chromosome 7 between base 117,592,082 to 117,594,986. 
+
+How many pathogenic variants are in the ABC transporter domain?
+
+Write a while loop to count the number of pathogenic variants within the ABC transporter domain. The total number of pathogenic variants should be assigned to the vector `ABC_transport_pathogenic_variants`.
+```{r}
+ABC_transport_pathogenic_variants <- 0
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.2.3.d.R")
+```
+**Check your answer by running the above block** 
+
+---
+
