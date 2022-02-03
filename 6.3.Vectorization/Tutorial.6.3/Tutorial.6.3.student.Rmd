@@ -10,6 +10,7 @@ library(ottr)
 library(testthat)
 library(dplyr)
 ```
+**Run the above block to load required packages**
 
 ---
 
@@ -62,6 +63,7 @@ For each disease, how many associated variants have each type of significance (B
 We will answer this question by creating a matrix.
 
 First, create an empty matrix (every value is NA), with 5 rows and 6 columns. Row names should be the values in the `diseases` vector, and column names are the 6 possible values for the `clinical.significance` column (provided in the vector `significance`). Call the matrix "variant_significance_by_disease".
+
 ```{r}
 significance <- c("Benign", "Likely_benign", "Likely_pathogenic", "Other", "Pathogenic", "Uncertain")
 # Write and execute your code here
@@ -74,6 +76,7 @@ significance <- c("Benign", "Likely_benign", "Likely_pathogenic", "Other", "Path
 **Check your answer by running the above block** 
 
 Write nested for loops to fill the values in the `variant_significance_by_disease` matrix. The matrix should be filled such that the value at `variant_significance_by_disease["Benign", "type.2.diabetes"]` is the number of variants associated with type 2 diabetes mellitus that have uncertain clinical significance.
+
 ```{r}
 # Write and execute your code here
 
@@ -84,7 +87,8 @@ Write nested for loops to fill the values in the `variant_significance_by_diseas
 ```
 **Check your answer by running the above block** 
 
-Write nested for loops to loop through *positional* row and column indices and divide element by the number of disease variants for the appropriate disease.
+Write nested for loops to loop through *positional* row and column indices of the `variant_significance_by_disease` matrix and divide the element by the number of disease variants for the appropriate disease.
+
 ```{r}
 # Write and execute your code here
 
@@ -105,6 +109,7 @@ The questions in this section will not use the ClinVar data.
 
 The factorial of n is the product of all positive integers from 1 to n. For example, 4 factorial is 1 x 2 x 3 x 4 = 24.
 Use nested loops to fill the vector `factorials` with the factorial of 1 to 10. One loop should be a for loop, and one should be a while loop.
+
 ```{r}
 factorials <- c()
 # Write and execute your code here
@@ -117,6 +122,7 @@ factorials <- c()
 **Check your answer by running the above block** 
 
 Use nested loops to create a list called "RNA_seqs_codons". Each list element should contain the codons in one of the RNA sequences in `RNA_seqs`. The name of the element should be the full RNA sequence.
+
 ```{r}
 RNA_seqs <- c("AUGGCAUUCCUACGG", "CUGAGAGCUUCCCGAUUU", "AAUGCUUGGACUCUC")
 # Write and execute your code here
@@ -146,6 +152,7 @@ for (row in 1:nrow(clinvar_data)) {
 ```
 
 Write code to determine the number of benign or likely benign variants in the `clinvar_data` data frame by vectorizing the above code. Save the number of benign or likely benign variants to a variable called "num_benign_var_2".
+
 ```{r}
 # Write and execute your code here
 
@@ -172,7 +179,8 @@ for (g in unique(clinvar_data$gene)) {
 gene_chromosomes
 ```
 
-Write code to create the same vector as above by vectorizing the code. Call the vector you create "gene_chromosomes_2".
+Write code to create the same vector as above by vectorizing the code in the above block. Call the vector you create "gene_chromosomes_2".
+
 ```{r}
 # Write and execute your code here
 
@@ -190,6 +198,7 @@ For each of the genes in our data frame, how many pathogenic or likely pathogeni
 Use nested loops to create a list called "pathogenic_gene_variants". Each list element should contain the number of pathogenic or likely pathogenic variants in each gene in `clinvar_data`. The name of the element should be the gene name.
 
 Hint: Use the `unique()` function.
+
 ```{r}
 # Write and execute your code here
 
@@ -201,6 +210,7 @@ Hint: Use the `unique()` function.
 **Check your answer by running the above block** 
 
 In this question we will partially vectorize the code from the previous question. Using one loop (keep the outer loop) and built-in functions, create a list called "pathogenic_gene_variants_2". Each list element should contain the number of pathogenic or likely pathogenic variants in each gene in `clinvar_data`. The name of each element should be the gene name.
+
 ```{r}
 # Write and execute your code here
 

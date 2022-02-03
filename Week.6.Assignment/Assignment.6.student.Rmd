@@ -20,7 +20,7 @@ library(dplyr)
 
 This assignment covers the content in week 6 lectures and tutorials. 
 
-Although it is not required to answer any of the questions, the dplyr package has been loaded should you wish to use it.
+Although it is not required to answer any of the questions, the dplyr package has been loaded for you should you wish to use it.
 
 #### Mark breakdown
 - Question 1 (10 marks)
@@ -65,6 +65,7 @@ tissues
 #### a.
 (2 marks)
 Use a for loop to create a vector named "median_tissue_expression" where each element is named with the name of the tissue, and the value is the median expression for that tissue.
+
 ```{r Assignment.W7.1.a}
 # Write and execute your code here
 
@@ -82,6 +83,7 @@ Use a for loop to add a new column "highest.tissue.exp" to `GTEx_data` which con
 Hints: 
 - The function `which.max()` will return the index of the highest number in a vector.
 - The vector `tissues` has, in order, the column names of the GTEx columns that contain the expression data.
+
 ```{r Assignment.W7.1.b}
 # Write and execute your code here
 
@@ -104,6 +106,7 @@ gene_types <- read.table("/home/jovyan/Week.6/Week.6.Assignment/gene.types.txt",
 gene_types
 ```
 Use a for loop to add a new column "gene.type" to `GTEx_data` which contains for each row, the type of gene it is ("coding", "nonCoding", "pseudo"). If the type for the gene is not in `gene_types`, instead put "unknown".
+
 ```{r}
 # Write and execute your code here
 
@@ -119,6 +122,7 @@ Use a for loop to add a new column "gene.type" to `GTEx_data` which contains for
 Below is a matrix called `tissue_exp_gene_type` with 54 columns (one per tissue) and 3 rows (one per gene type). The columns have been named accordingly and all values in the matrix are `NA`. Use nested for loops to fill the matrix with the number of each of the gene types that are expressed > 1 in each tissue type.
 
 For example, in liver tissue, 11645 coding genes have an expression value > 1, 1271 nonCoding genes have an expression value > 1, and 516 pseudo genes have an expression value > 1. Use this to check your work.
+
 ```{r Assignment.W7.1.d}
 tissue_exp_gene_type <- matrix(data=NA, nrow=3, ncol=54)
 colnames(tissue_exp_gene_type) <- tissues
@@ -144,8 +148,9 @@ The data frame below `GTEx_data_Lymphocytes_desc` contains the same data as `GTE
 GTEx_data_Lymphocytes_desc <- arrange(GTEx_data, desc(Lymphocytes))
 GTEx_data_Lymphocytes_desc
 ```
-Use a while loop to identify the gene names of the 10 most highly expressed genes in lymphocytes ("Lymphocytes") that are NOT expressed in whole blood ("Whole.Blood"). The definition of NOT expressed is an expression value < 1. Assign the names of these genes to a vector called "q.2.a". 
+Use a while loop to identify the gene names of the 10 most highly expressed genes in lymphocytes ("Lymphocytes") that are NOT expressed in whole blood ("Whole.Blood"). The definition of NOT expressed is an expression value < 1. Assign the names of these genes to a vector called "top_genes_lymphocytes_not_whole". 
 Use the `GTEx_data_Lymphocytes_desc` data frame to answer this question.
+
 ```{r}
 # Write and execute your code here
 
@@ -158,9 +163,10 @@ Use the `GTEx_data_Lymphocytes_desc` data frame to answer this question.
 
 #### b.
 (3 marks)
-Use a while loop to identify the name of the most highly expressed gene in lymphocytes that is not expressed in any other tissue type (not expressed = expressed below 1). Assign the name of this gene to a variable named "q.2.b".
+Use a while loop to identify the name of the most highly expressed gene in lymphocytes that is not expressed in any other tissue type (not expressed = expressed below 1). Assign the name of this gene to a variable named "top_genes_lymphocytes_only".
 
 Hint: "Lymphocytes" is column 25, so to get all the columns for the other 53 tissues you can use the code: `GTEx_data_Lymphocytes_desc[, c(3:24, 26:56)]`
+
 ```{r Assignment.W7.2.b}
 # Write and execute your code here
 
@@ -180,6 +186,7 @@ For this question you can use loops or vectorized methods (your mark will not be
 #### a.
 (1 mark)
 Use either type of loop or vectorized code to create a vector named "mean_tissue_expression". Each element should be named with the name of the tissue, and the value should be the mean tissue expression.
+
 ```{r Assignment.W7.3.a}
 # Write and execute your code here
 
@@ -192,7 +199,8 @@ Use either type of loop or vectorized code to create a vector named "mean_tissue
 
 #### b.
 (2 marks)
-Use either type of loop or vectorized code to identify the gene with the highest expression in the kidney cortex ("Kidney.Cortex") that is not expressed below 1 in the kidney medulla ("Kidney.Medulla"). Assign the name of the gene to a variable called "q.3.b".
+Use either type of loop or vectorized code to identify the gene with the highest expression in the kidney cortex ("Kidney.Cortex") that is not expressed below 1 in the kidney medulla ("Kidney.Medulla"). Assign the name of the gene to a variable called "top_gene_cortex_not_medulla".
+
 ```{r Assignment.W7.3.b}
 # Write and execute your code here
 
@@ -206,7 +214,8 @@ Use either type of loop or vectorized code to identify the gene with the highest
 #### c.
 (1 mark)
 Use either type of loop or vectorized code to determine the mean and standard deviation of the expression of pseudogenes in the cerebellum ("Brain.Cerebellum").
-Put the mean and standard deviation into a vector named "q.3.c" (mean should be at index 1, standard deviation at index 2, and elements should NOT have names). 
+Put the mean and standard deviation into a vector named "pseudogene_cerebellum_stats" (mean should be at index 1, standard deviation at index 2, and elements should NOT have names). 
+
 ```{r Assignment.W7.3.c}
 # Write and execute your code here
 
