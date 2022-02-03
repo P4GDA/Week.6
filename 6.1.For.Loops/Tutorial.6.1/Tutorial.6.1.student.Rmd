@@ -80,7 +80,7 @@ If during the 3rd iteration you looked at the value of the variable `num`, what 
 
 ---
 
-Write a for loop that replaces each number in `num_vect` with the square root of the number.
+Write a for loop that replaces each number in `num_vect` with the square root of the number. Hint: iterate through the vector index.
 
 ```{r}
 num_vect <- c(1, 4, 9, 16, 25, 36, 49, 64, 81, 100)
@@ -95,9 +95,12 @@ num_vect <- c(1, 4, 9, 16, 25, 36, 49, 64, 81, 100)
 
 ---
 
-Below is a vector of the type of cancer for each of 20 patients (`patient_cancer_types`), and a vector of all unique the cancer types (`cancer_types`). Using a for loop, fill the empty vector `patients_per_cancer_type` so that it has one element for each cancer type. The value at each element should be the number of patients with the cancer type and the element should be named with the cancer type.
+Below is a vector of the type of cancer for each of 20 patients (`patient_cancer_types`), and a vector of all unique the cancer types (`cancer_types`). Using a for loop, fill the empty vector `patients_per_cancer_type` so that it has one element for each cancer type:
+- The value at each element should be the number of patients with the cancer type
+- The element should be named with the cancer type
+Both steps should be completed within your loop.
 
-Hint: to count the number of values in a vector that match a specific value you can use:
+Hint: iterate through the values of `cancer_types`. To count the number of values in a vector that match a specific value you can use:
 
     length(which(vector == value))
     
@@ -146,14 +149,13 @@ Write a for loop to add the next 8 numbers to the `fibonacci_sequence` vector. H
 For the rest of this tutorial we will used data downloaded from ClinVar (https://www.ncbi.nlm.nih.gov/clinvar/), a public database of human gene variants and their associated phenotypes.
 
 The dataset we will use includes all the variants on ClinVar associated with the following 5 diseases:
-
 - Cystic fibrosis
 - Duchenne muscular dystrophy
 - Glaucoma
 - Phenylketonuria
 - Type 2 diabetes mellitus
 
-Upload and view the data set with the code below. A vector called `diseases` has also been created for you to use.
+Upload and view the data set with the code below. A vector called `diseases` has also been created for you to use in the following questions.
 
 ```{r}
 diseases <- c("cystic.fibrosis", "duchenne.muscular.dystrophy", "glaucoma", "pheynlketonuria", "type.2.diabetes")
@@ -163,7 +165,6 @@ clinvar_data
 ```
 
 Each row in the data frame contains one variant with the following information:
-
 - `chromosome`: chromosome the variant is on
 - `position`: exact base position of the variant
 - `disease`: the disease the patient(s) with the variant has(have)
@@ -187,10 +188,13 @@ clinvar_data$pathogenic <- NA
 
 What percentage of variants for each disease is pathogenic or likely pathogenic? 
 
-To answer this question, write a for loop to fill the vector below `perc_pathogenic_variants`. It should contain the percentage of pathogenic or likely pathogenic variants (use your new column!) for each disease. Each vector element should be named with the disease name. 
+To answer this question, write a for loop to fill the vector `percent_pathogenic_variants` below:
+- Each element should be the percentage of pathogenic or likely pathogenic variants in a disease
+- Each element should be named with the disease name
+Both steps should be completed within your loop. Hint: you can iterate through the previously generated `diseases` vector and use the information in your new column `pathogenic`.
 
 ```{r}
-perc_pathogenic_variants <- c()
+percent_pathogenic_variants <- c()
 # Write and execute your code here
 
 ```
@@ -212,7 +216,12 @@ n_distinct(clinvar_data %>% filter(gene == "MYOC") %>% select(clinical.significa
 
 For each disease, how many unique genes have a pathogenic variant associated with the disease? Which disease can be caused by the most genes (according to this data set)?
 
-Write a for loop to fill the vector below `num_genes_with_pathogenic_variants`. It should contain the number of distinct genes that contain pathogenic/likely pathogenic variants for each disease. Each vector element should be named with the disease name. Assign the name of the disease with the most distinct genes with pathogenic variants to a variable named "disease_with_most_pathogenic_genes".
+Write a for loop to fill the vector `num_genes_with_pathogenic_variants` below:
+- It should contain the number of distinct genes that contain pathogenic/likely pathogenic variants for each disease
+- Each vector element should be named with the disease name. 
+Both steps should be completed within your loop.
+
+Then assign the name of the disease with the most distinct genes with pathogenic variants to a variable named "disease_with_most_pathogenic_genes".
 
 ```{r}
 num_genes_with_pathogenic_variants <- c()
