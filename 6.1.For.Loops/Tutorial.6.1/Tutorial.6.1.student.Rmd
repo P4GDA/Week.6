@@ -128,7 +128,7 @@ The Fibonacci sequence is a sequence of numbers in which each number is the sum 
 fibonacci_sequence <- c(0, 1, 1, 2)
 ```
 
-Write a for loop to add the next 8 numbers to the `fibonacci_sequence` vector. Hint: this will mean you need to add numbers at the 5th - 12th indices.
+Write a for loop to add the next 8 numbers to the `fibonacci_sequence` vector. Hint: this will mean you need to add numbers at the 5th-12th indices.
 
 ```{r}
 # Write and execute your code here
@@ -173,7 +173,7 @@ Each row in the data frame contains one variant with the following information:
 
 ---
 
-A new column `pathogenic` has been added to the `clinvar_data` data frame below to help us more easily analyze the variants that are pathogenic or likely pathogenic. Fill the column by looping through each row in the data frame and setting the value for that row in the `pathogenic` column to `TRUE` if the `clinical.significance` in that row is "Pathogenic" or "Likely_pathogenic", or to `FALSE` if it has any other value.
+A new column `pathogenic` (with temporary NA values) has been added to the `clinvar_data` data frame below to help us more easily analyze the variants that are pathogenic or likely pathogenic. Fill the column by looping through each row in the data frame and setting the value for that row in the `pathogenic` column to `TRUE` if the `clinical.significance` in that row is "Pathogenic" or "Likely_pathogenic", or to `FALSE` if it has any other value.
 
 ```{r}
 clinvar_data$pathogenic <- NA
@@ -191,7 +191,7 @@ What percentage of variants for each disease is pathogenic or likely pathogenic?
 To answer this question, write a for loop to fill the vector `percent_pathogenic_variants` below:
 - Each element should be the percentage of pathogenic or likely pathogenic variants in a disease
 - Each element should be named with the disease name
-Both steps should be completed within your loop. Hint: you can iterate through the previously generated `diseases` vector and use the information in your new column `pathogenic`.
+Both steps should be completed within your loop. Hint: you can iterate through the previously generated `diseases` vector and use the information in your new `pathogenic` column.
 
 ```{r}
 percent_pathogenic_variants <- c()

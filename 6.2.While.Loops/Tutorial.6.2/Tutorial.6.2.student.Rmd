@@ -40,7 +40,7 @@ while (i < 300) {
 }
 ```
 
-What will the value of `i` be when the while loop stops? Assign the value to a variable called "i_final_value".
+What will the value of `i` be when the while loop stops (doesn't complete any more iterations)? Assign the value to a variable called "i_final_value".
 
 ```{r}
 # Write and execute your code here
@@ -78,7 +78,7 @@ If at the *end* of the 3rd iteration (after `i <- i * 3`) you looked at the valu
 
 ---
 
-The following while loop was intended to add the square root of each number from 1 to 10 to the vector `vect1`, but the loop is infinite. Alter the code to fix the while loop.
+The following while loop was intended to add the square root of each number from 1 to 10 to the vector `vect1`, but the loop is infinite. Alter the code below to fix the while loop so it stops appropriately.
 
 ```{r}
 # Modify the code here
@@ -101,7 +101,7 @@ while (i < 10) {
 
 ---
 
-A student's heart rate is taken every second for the first minute after they start a quiz. The vector `heart_rate` below shows the heart rate measurements in order: element 1 is their heart rate at second 1, element 2 is their heart at second 2, etc.
+A student's heart rate is taken every second for the first minute after they start a quiz. The vector `heart_rate` below shows the heart rate measurements in order: element 1 is their heart rate at second 1, element 2 is their heart rate at second 2, etc.
 
 ```{r}
 heart_rate <- c(80,82,83,81,83,84,85,84,86,85,86,86,87,88,87,86,88,88,89,90,88,90,91,93,94,92,90,89,89,90,88,87,86,88,89,92,94,93,95,97,97,96,98,98,99,101,101,104,104,105,103,102,102,104,105,105,107,106,105,106)
@@ -141,7 +141,7 @@ Write a while loop to add numbers to the `fibonacci_sequence` vector until the v
 
 ---
 
-Split the RNA sequence in `RNA_seq` into codons using a while loop and add each codon to the vector `codons` below. Hint: You should use the `substr()` function!
+Split the RNA sequence in `RNA_seq` into codons using a while loop and add each codon to the vector `codons` below. Hint: Use the `nchar()` function to make the loop work for any length of RNA sequence (not just the one below). You should also use the `substr()` function.
 
 ```{r}
 RNA_seq <- "AUGGCAUUCCUACGG"
@@ -161,7 +161,7 @@ codons <- c()
 
 ---
 
-For the rest of this tutorial we will used data downloaded from ClinVar (https://www.ncbi.nlm.nih.gov/clinvar/), a public database of human gene variants and their associated phenotypes.
+For the rest of this tutorial we will use data downloaded from ClinVar (https://www.ncbi.nlm.nih.gov/clinvar/), a public database of human gene variants and their associated phenotypes.
 
 The dataset we will use includes all the variants on ClinVar associated with the following 5 diseases:
 
@@ -190,7 +190,7 @@ Each row in the data frame contains one variant with the following information:
 
 ---
 
-A new column `pathogenic` has been added to the `clinvar_data` data frame below to help us more easily analyze the variants that are pathogenic or likely pathogenic. Fill the column by looping through each row in the data frame and setting the value for that row in the `pathogenic` column to `TRUE` if the `clinical.significance` in that row is "Pathogenic" or "Likely_pathogenic", otherwise set it to `FALSE`.
+In tutorial 6.1, we used a *for loop* to fill in a new column named `pathogenic` that was added to the `clinvar_data` data frame to help us more easily analyze the variants that are pathogenic or likely pathogenic. This time, fill in the column with a *while loop* by looping through each row in the data frame and setting the value for that row in the `pathogenic` column to `TRUE` if the `clinical.significance` in that row is "Pathogenic" or "Likely_pathogenic"; otherwise set it to `FALSE`.
 
 ```{r}
 clinvar_data$pathogenic <- NA
@@ -203,7 +203,7 @@ clinvar_data$pathogenic <- NA
 ```
 **Check your answer by running the above block** 
 
-This question was also completed in the *6.1 For Loops* tutorial. Consider: does it make more sense to use a while loop or a for loop for this task?
+Consider: does it make more sense to use a while loop or a for loop for this task?
 
 ---
 
@@ -218,7 +218,7 @@ DMD_variants
 
 What percentage of DMD variants are in the first 25% of bases of the DMD gene?
 
-Using a while loop count the number of variants in the first 25% of the DMD gene (remember the gene starts at 33211549 because it is on the negative strand). Use the result to assign the percentage of DMD variants that in the first 25% of bases of the DMD gene to a variable named "perc_var_in_first_quarter".
+Using a while loop, count the number of variants in the first 25% of bases of the DMD gene (remember the gene starts at 33211549 because it is on the negative strand). Use the result to assign the percentage of DMD variants that are in the first 25% of bases of the DMD gene to a variable named "percent_var_in_first_quarter".
 
 ```{r}
 # Write and execute your cod here

@@ -6,7 +6,7 @@ test = list(
       name = NA,
       points = 1.0,
       code = {
-        expect_equal(round(perc_var_in_first_quarter, 4), 11.6791)
+        expect_equal(round(percent_var_in_first_quarter, 4), 11.6791)
       }
     )
   )
