@@ -1,0 +1,224 @@
+---
+title: "6.3 Applying Loops - Tutorial"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE, warning = TRUE)
+
+library(ottr)
+library(testthat)
+library(dplyr)
+```
+**Run the above block to load required packages**
+
+---
+
+At the end of this tutorial you should be able to:
+
+* Use nested for loops
+* Loop through each element of a matrix using nested for loops
+* Nest for and while loops
+* Convert for loops to vectorized code
+
+**NOTE: the dplyr package has already been loaded for you**
+
+---
+
+## 6.3.1: Nested For Loops
+
+---
+
+For most of this tutorial we will used data downloaded from ClinVar (https://www.ncbi.nlm.nih.gov/clinvar/), a public database of human gene variants and their associated phenotypes.
+
+The dataset we will use includes all the variants on ClinVar associated with the following 5 diseases:
+
+- Cystic fibrosis
+- Duchenne muscular dystrophy
+- Glaucoma
+- Phenylketonuria
+- Type 2 diabetes mellitus
+
+Upload and view the data set with the code below. A vector called `diseases` has also been created for you to use.
+
+```{r}
+diseases <- c("cystic.fibrosis", "duchenne.muscular.dystrophy", "glaucoma", "pheynlketonuria", "type.2.diabetes")
+clinvar_data <- read.csv("/home/jovyan/Week.6/6.3.Vectorization/Tutorial.6.3/clinvar_data.csv",
+                         stringsAsFactors = FALSE)
+clinvar_data
+```
+
+Each row in the data frame contains one variant with the following information:
+
+- `chromosome`: chromosome the variant is on
+- `position`: exact base position of the variant
+- `disease`: the disease the patient(s) with the variant has(have)
+- `gene`: the gene in which the variant is located
+- `clinical.significance`: defines whether the variant is pathogenic or not, possible values are: "Pathogenic", "Likely_pathogenic", "Benign", "Likely_benign", "Uncertain", "Other"
+
+---
+
+For each disease, how many associated variants have each type of significance (Benign, Likely_benign, Likely_pathogenic, Other, Pathogenic, Uncertain)?
+
+We will answer this question by creating a matrix.
+
+First, create an empty matrix (every value is NA), with 5 rows and 6 columns. Row names should be the values in the `diseases` vector, and column names are the 6 possible values for the `clinical.significance` column (provided in the vector `significance`). Call the matrix "variant_significance_by_disease".
+
+```{r}
+significance <- c("Benign", "Likely_benign", "Likely_pathogenic", "Other", "Pathogenic", "Uncertain")
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.1.a.R")
+```
+**Check your answer by running the above block** 
+
+Write nested for loops to fill the values in the `variant_significance_by_disease` matrix. The matrix should be filled such that the value at `variant_significance_by_disease["Benign", "type.2.diabetes"]` is the number of variants associated with type 2 diabetes mellitus that have uncertain clinical significance.
+
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.1.b.R")
+```
+**Check your answer by running the above block** 
+
+Write nested for loops to loop through *positional* row and column indices of the `variant_significance_by_disease` matrix and divide the element by the number of disease variants for the appropriate disease.
+
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.1.c.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+## 6.3.2: Nested For and While Loops
+
+---
+
+The questions in this section will not use the ClinVar data.
+
+The factorial of n is the product of all positive integers from 1 to n. For example, 4 factorial is 1 x 2 x 3 x 4 = 24.
+Use nested loops to fill the vector `factorials` with the factorial of 1 to 10. One loop should be a for loop, and one should be a while loop.
+
+```{r}
+factorials <- c()
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.2.a.R")
+```
+**Check your answer by running the above block** 
+
+Use nested loops to create a list called "RNA_seqs_codons". Each list element should contain the codons in one of the RNA sequences in `RNA_seqs`. The name of the element should be the full RNA sequence.
+
+```{r}
+RNA_seqs <- c("AUGGCAUUCCUACGG", "CUGAGAGCUUCCCGAUUU", "AAUGCUUGGACUCUC")
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.2.b.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+## 6.3.3: Vectorization
+
+---
+
+How many benign or likely benign variants are there in the `clinvar_data` data frame? The following code calculates this number.
+
+```{r}
+num_benign_var <- 0
+for (row in 1:nrow(clinvar_data)) {
+  if (clinvar_data$clinical.significance[row] == "Benign" | clinvar_data$clinical.significance[row] == "Likely_benign") {
+    num_benign_var <- num_benign_var + 1
+  }
+}
+```
+
+Write code to determine the number of benign or likely benign variants in the `clinvar_data` data frame by vectorizing the above code. Save the number of benign or likely benign variants to a variable called "num_benign_var_2".
+
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.3.a.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+Which chromosome is each gene in our data set on?
+
+The following code creates a vector called "gene_chromosomes" with the chromosome each gene is on, with the gene name as the element name. Note that the function `unique()` is used on the `gene` column to get a vector of unique/distinct gene names (each gene name will only appear once in the vector). `unique()` can also be used get unique rows of a data frame.
+
+```{r}
+gene_chromosomes <- c()
+for (g in unique(clinvar_data$gene)) {
+  gene_rows <- clinvar_data %>% filter(gene == g)
+  chr <- gene_rows$chromosome[1]
+  gene_chromosomes[g] <- chr
+} 
+gene_chromosomes
+```
+
+Write code to create the same vector as above by vectorizing the code in the above block. Call the vector you create "gene_chromosomes_2".
+
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.3.b.R")
+```
+**Check your answer by running the above block** 
+
+---
+
+For each of the genes in our data frame, how many pathogenic or likely pathogenic variants does it have?
+
+Use nested loops to create a list called "pathogenic_gene_variants". Each list element should contain the number of pathogenic or likely pathogenic variants in each gene in `clinvar_data`. The name of the element should be the gene name.
+
+Hint: Use the `unique()` function.
+
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.3.c.R")
+```
+**Check your answer by running the above block** 
+
+In this question we will partially vectorize the code from the previous question. Using one loop (keep the outer loop) and built-in functions, create a list called "pathogenic_gene_variants_2". Each list element should contain the number of pathogenic or likely pathogenic variants in each gene in `clinvar_data`. The name of each element should be the gene name.
+
+```{r}
+# Write and execute your code here
+
+```
+
+```{r}
+. = ottr::check("tests/Tutorial.W6.3.3.d.R")
+```
+**Check your answer by running the above block** 
+
+---
