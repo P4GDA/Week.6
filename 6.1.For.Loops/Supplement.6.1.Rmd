@@ -1,0 +1,243 @@
+---
+title: "6.1 For Loops"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+
+## 6.1.1: Introduction to For Loops
+
+---
+
+### Repetitive Tasks
+
+Often in life we need to perform the same task multiple times, each time performing the task for a different item:
+- For each dish in the sink, wash the dish
+- For each course you are taking, add the exam date to your calendar
+
+These situations also show up often in biology. For example, let’s say you are working in the lab and have six samples. For each sample you need to add 10 uL of lysis buffer and then place it on ice.
+
+It is a repetitive task, in which the the sample you are working with changes but the procedure does not change.
+
+If we were to write out a to-do list for this task it could look like this:
+
+    - Add 10 uL of lysis buffer to sample 1
+    - Place sample 1 on ice
+    - Add 10 uL of lysis buffer to sample 2
+    - Place sample 2 on ice
+    - Add 10 uL of lysis buffer to sample 3
+    - Place sample 3 on ice
+    - Add 10 uL of lysis buffer to sample 4
+    - Place sample 4 on ice
+    - Add 10 uL of lysis buffer to sample 5
+    - Place sample 5 on ice
+    - Add 10 uL of lysis buffer to sample 6
+    - Place sample 6 on ice
+
+Or we could streamline the to-do list:
+
+    For X in sample 1, sample 2, sample 3, sample 4, sample 5, sample 6:
+      - Add 10 uL of lysis buffer to X
+      - Place X on ice
+
+These two to-do lists are exactly the same--both outline the same set of tasks to be performed--but by using X to represent each individual sample, we can save ourselves a lot of excess writing. 
+      
+---
+
+### For Loops
+
+In computer programming, *loops* perform repetitive tasks. A *for loop* performs the same programming task for each item in a set of items:
+
+    for (i in items) {
+      ... code block ...
+    }
+
+This is equivalent to saying: "for each item i in the set of items, execute this code block"
+
+The syntax of a for loop will look similar to the syntax for conditional statements. As with conditional statements, the code within the curly braces is preceded by a tab for greater clarity when reading code. 
+
+To better understand how a for loop works, let's walk through an example. Let's say we want to take the natural log of the numbers 1, 3, and 5. We could write the following 3 lines of code:
+
+```{r}
+log(1)
+log(3)
+log(5)
+```
+
+We could also assign each number to a variable before taking the logarithm:
+
+```{r}
+x <- 1
+log(x)
+x <- 3
+log(x)
+x <- 5
+log(x)
+```
+
+When we write the code like this, we are taking each item (1, 3, and 5) and running the exact same piece of code `log(x)`. This indicates that we can convert this code into a for loop:
+
+    for (i in items) {
+      ... code block ...
+    }
+
+```{r}
+for (x in c(1,3,5)) {
+  print(log(x))
+}
+```
+
+**Note that like conditional statements, we need to use the print function inside the curly braces**
+
+Internally, this for loop runs the exact same code as the previous code block. A for loop will run once for each item in the set of items (in this for loop, that's three times). Each time it runs for an item it is called an *iteration* of the loop. In the first iteration, the variable `x` will take on the value of the first item in the set (`1`), and then the code inside will be executed In the second iteration, `x` will take on the value of the second item in the set (`3`), and then the code inside will be executed. Finally, `x` will take on the value of the third item in the set (`5`) and the code inside will be executed.
+
+For loops save you time and space when writing code, as you don't have to write the same code over and over again.
+
+---
+
+## 6.1.2: For Loop Techniques
+
+---
+
+### Modifying Data Structures
+
+For loops can be used to alter existing data structures, including:
+- Adding elements to vectors
+- Adding rows to matrices or data frames
+- Editing each element in a vector
+- Editing each value in a data frame column
+Etc.
+
+Let's look at an example of adding elements to a vector. First let's create an empty vector called "celsius":
+
+```{r}
+celsius <- c()
+celsius
+```
+
+Empty vectors output `NULL` as they do not have a value. 
+
+Now we can use a for loop to add elements to the vector. The for loop below takes a vector that contains three temperatures in Kelvin as its set of items. At each iteration of the loop, the current temperature is assigned to the variable `temp`. 
+
+This first line of code within the curly braces converts the temperature from Kelvin to Celsius by subtracting 273.15 degrees. The second line adds the new value to end of the `celsius` vector with the combine function, and the last line outputs the current value of the `celsius` vector.
+
+```{r}
+for (temp in c(292.48, 301.29, 287.32)) {
+  t_C <- temp - 273.15
+  celsius <- c(celsius, t_C)
+  print(celsius)
+}
+```
+
+When we run the code, we can see that three lines are printed, one for each iteration of the loop. At the end of the first iteration, one value has been added to `celsius`, two have been added at the end of the second iteration, and three at the end of the third.
+
+---
+
+### Looping Through Indices
+
+Often it is helpful to loop through the positional indices of a vector so we can access the index of each element in each iteration of the for loop.
+
+To loop through positional indices we can create a sequence from 1 to the length of the vector: `1:length(vector)`.
+
+For example, let's say we have a vector of weights (in grams) for four mice and we want to create a vector of sample names for the mice:
+
+```{r}
+mouse_wts <- c(23.7, 21.4, 26.8, 28.3)
+mouse_samples <- c()
+```
+
+We can loop through each positional index in mouse weights, and use the `paste()` function to paste together the word "mouse" and the current index with an underscore in between. Then we can add this sample name to our `mouse_samples` vectors:
+
+```{r}
+for (i in 1:length(mouse_wts)) {
+  sample <- paste("mouse", i, sep="_")
+  mouse_samples <- c(mouse_samples, sample)
+}
+mouse_samples
+```
+
+When we look at the value of `mouse_samples`, we can see that we have a vector with the names "mouse_1", "mouse_2", "mouse_3", and "mouse_4".
+
+Another reason to loop through the positional indices of a vector is to be able to access both the index AND the value of each element.
+
+For example, if we want to go through each of the elements in this vector of mouse samples and edit (replace) each value, we need to be able to access the sample name to edit it, but also the index of the sample, so that we can replace the value at the appropriate location.
+
+If we only know an element value, we cannot access the index, but if we know the positional index of an element we can also access the value. Thus we need to loop through indices so that we can retrieve the value of the element at the appropriate index:
+
+```{r}
+for (i in 1:length(mouse_samples)) {
+  sample <- mouse_samples[i]
+  short_name <- gsub("ouse", "", sample)
+  mouse_samples[i] <- short_name
+}
+mouse_samples
+```
+
+At the start of the above loop we retrieve the value at the index, so that in each iteration, `i` contains the index and `sample` contains the value at that index. 
+
+With `gsub()` we can replace the letters "ouse" in `sample` with nothing, shortening the sample name. 
+
+Finally, we can use the index again to replace the value in `mouse_samples` at the appropriate index with the new shortened name. 
+
+---
+
+## 6.1.3: For Loop Applications
+
+---
+
+### Expression Correlation
+
+Let's look at some practical examples of for loops in biological research. We will be using brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain). 
+
+```{r}
+brain_expression <- read.csv("/home/jovyan/Week.6/6.1.For.Loops/brain_expression.csv", stringsAsFactors = FALSE)
+brain_expression
+```
+
+Each of the rows represent one of 15,271 genes. The first column is the Ensembl Gene ID of each gene, which is a unique gene identifier. The second to eleventh columns contain normalized gene expression values for 10 different brain tissues. Let's save the names of these tissues (which are the column names for columns 2-11) in a vector named `brain_tissues`:
+
+```{r}
+brain_tissues <- colnames(brain_expression)[2:11]
+brain_tissues
+```
+
+If we want to calculate the correlation in gene expression between the amygdala and each of the other brain tissues (including itself), we could write out the correlation function 10 times. Alternatively, we can loop through each tissue using a for loop and calculate the correlation between the tissue in the current iteration and the amygdala.
+
+For this loop, our items will be each of the elements the `brain_tissues` vector. In each iteration, we can determine the correlation between the amygdala and the iteration tissue by retrieving the values in both columns and using them as arguments to the `cor()` function. 
+
+Next we round the resulting correlation and use the `print()` and `paste()` functions to paste together and output the character values "amygdala and", the iteration tissue name, a colon, and the correlation:
+
+```{r}
+for (tissue in brain_tissues) {
+  r <- cor(brain_expression[, "amygdala"], brain_expression[, tissue])
+  r <- round(r, 2)
+  print(paste("amygdala and", tissue, ":", r))
+}
+```
+
+If we did not use a for loop, we would need 30 lines of code instead to produce the same output instead of the five lines that constitute our loop.
+
+---
+
+### Looping Through Rows
+
+So far we have been writing loops to iterate through vectors or vector indices. It is often also helpful to loop through data frame row indices. This allows you to access all of the values in a particular row within the loop.
+
+The hindbrain is composed of the pons, the medulla oblongata, and the cerebellum. In the `brain_expression` data frame, there is one column for `cerebellum` and one for `pons.and.medulla`. If we wanted to know the maximum expression of each gene in any component of the hindbrain, we could add a new column to contain the maximum expression of each gene. To do this we will need to determine whether the "cerebellum" column value or the "pons.and.medulla" column is higher the expression value.
+
+First, we can add a new column called "hindbrain.max" to the `brain_expression` data frame with all values equal to `NA`. The for loop iterates through each row index in `brain_expression`, retrieves the maximum value for that row between the two columns, and assigns the higher value to the `hindbrain.max` column for the row currently being iterated:
+
+```{r}
+brain_expression$hindbrain.max <- NA
+for (row in 1:nrow(brain_expression)) {
+  hindbrain.row.max <- max(brain_expression[row, c("pons.and.medulla", "cerebellum")])
+  brain_expression$hindbrain.max[row] <- hindbrain.row.max
+}
+brain_expression
+```
+
+---

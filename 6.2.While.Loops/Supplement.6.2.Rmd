@@ -1,0 +1,351 @@
+---
+title: "6.2 While Loops"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+
+## 6.2.1: Introduction to While Loops
+
+---
+
+### Conditional Repetitive Tasks
+
+Previously we learned about for loops, which are used to perform the same task multiple times, each time performing the task for a different item. There are other types of repetitive tasks as well, including conditional repetitive tasks. These are tasks that are performed until some end goal is reached. For example:
+1. Go for a run every day until you can run 5 km without stopping
+2. Do the practice midterm for your course until you can answer all the questions correctly
+
+Both of these examples have a task that is done over and over again until a *stopping condition* is met. The stopping condition is like a goal: it is the condition that signals you can stop repeating the task, or in other words, terminate the process:
+1. Task: go for a run. 
+   Stopping condition: you can run 5 km without stopping
+2. Task: do the practice midterm. 
+   Stopping condition: you answer all questions correctly on the practice midterm
+
+A conditional repetitive task can also have two stopping conditions. For example 2, the stopping condition could be: you answer all questions correctly on the practice midterm OR the midterm you are preparing for occurs.
+
+These situations also show up often in biology. For example, let’s say you are working in the lab using a solution with a pH of 6.8 that needs to be brought up to a pH of 7.2. You do this by adding a drop of NaOH and then checking the pH with a pH meter. 
+
+This is a conditional repetitive task:
+- Task: add a drop of NaOH and check pH
+  Stopping condition: pH >= 7.2.
+
+It is hard to write a to-do list for this type of repetitive task, as you do not know how many times you need to add NaOH until the pH reaches 7.2. This is a feature of conditional repetitive tasks: you do not know how many times the task needs to be performed before you are finished.
+
+We can write a shortened version of the task:
+
+    Until the pH >= 7.2:
+      - Add a drop of NaOH
+      - Check the pH with pH meter
+
+We can also think about conditional repetitive tasks in a different way:
+
+    While the pH < 7.2:
+      - Add a drop of NaOH
+      - Check the pH with pH meter
+
+This is called a *while loop*. A while loop performs the same task while a condition is TRUE (until the condition is FALSE). There are three equivalent ways of expressing this:
+- *While* *condition* is *TRUE* perform task
+- *Until* *condition* is *FALSE* perform task
+- *Until* *stopping condition* is *TRUE* perform task
+
+Notice that the *condition* of the while loop "ph < 7.2" is the opposite of the *stopping condition* "ph >= 7.2". 
+
+Going back to our previous examples, we can rephrase them the same way:
+1. While you cannot run 5km without stopping, go for a run every day
+2. While you cannot answer all the questions correctly on the practice midterm, do the practice midterm
+
+---
+
+### While Loops
+
+A *while loop* performs the same programming task repeatedly until a logical expression == `TRUE`:
+
+    while (logical expression) {
+      ... code block ...
+    }
+
+This is equivalent to saying: "while logical expression is TRUE execute the code block"
+
+The syntax of a while loop will look similar to the syntax of conditional statements and of for loops. The code within the curly braces is preceded by a tab for greater clarity when reading code. 
+
+One of the most important aspects of a while loop is that the code block must alter some value that affects the result of the logical expression. A common format for this is:
+
+    i <- value
+    while (logical expression using i) {
+      ... code block ...
+      i <- updated_value 
+    }
+
+To better understand how a while loop works, let's walk through an example. Let's say we want to take print all the numbers that are less than three, starting with the number one. 
+
+```{r}
+i <- 1
+while (i < 3) {
+  print(i)
+  i <- i + 1
+}
+```
+
+This while loop will continue to run while the value of `i` is less than 3 (`i` < 3). The stopping condition is therefore `i` >= 3. 
+
+In each iteration of the loop, `1` is added to `i`, altering the value of `i` and potentially altering the outcome of the logical expression. 
+
+Let's break down exactly what happens when this while loop is executed:
+
+Before it starts, the value of `i` is 1.
+  
+  FIRST ITERATION
+    check if `i` < 3, and since the value of `i` is 1, it outputs `TRUE`
+    enter curly braces
+    print the value of `i`
+    add 1 to `i`, so now the value of `i` is 2
+    exit curly braces
+  SECOND ITERATION
+    check if `i` < 3, and since the value of `i` is 2, it outputs `TRUE`
+    enter curly braces
+    print the value of `i`
+    add 1 to `i`, so now the value of `i` is 3
+    exit curly braces
+  THIRD ITERATION
+    check if `i` < 3, and since the value of `i` is 3, it outputs `FALSE`
+    stop the loop
+
+What happens if we don't change the value of `i` in the while loop above? Or in a more general case, what if the code within the curly braces does not alter a value that affects the result of the logical expression? 
+
+We would get an *infinite loop*. An infinite loop will run forever. For example, try running the code block below. The only way to stop it from continuing to run is to click the red square at the top right hand side of the code block. Depending on how quickly you stop the code chunk, you may want to remove the output with the "x" at the top right of the output block so that it doesn't take up so much space on your screen:
+
+```{r}
+i <- 1
+while (i < 3) {
+  print(i)
+}
+```
+
+You can see that an infinite loop will go on forever because the conditional statement will never be equal to `FALSE`. In this case, `i` was always equal to 1 and thus always less than 3.
+
+---
+
+## 6.2.2: While Loop Techniques
+
+---
+
+### Value at the End of a While Loop
+
+Let's examine another while loop. This while loop continues while `i <= 100`, thus the stopping condition is `i > 100`. In each iteration, 1 is added to `i`. In the code below, the value of `i` is output after termination of the while loop. Before you run the code below, what do you think the value of `i` will be at the end? 
+
+```{r}
+i <- 1
+while (i <= 100) {
+i <- i + 1
+}
+i
+```
+
+At the end of a while loop, the value of variable that is altered in the while loop will fail the logical condition. In this case, the first time `i` will fail the logical expression `i <= 100` is when `i` reaches 101. It's important to keep this in mind, especially if you plan to use the variable in other code.
+
+### Two Stopping Conditions
+
+Below we have a vector `mouse_wts` of the weights of four mice sorted in order by increasing value:
+
+```{r}
+mouse_wts <- c(21.4, 23.7, 26.8, 28.3)
+```
+
+We can write a while loop to identify the first mouse with a weight that is greater than or equal to 25 grams. We want the loop to run while the mouse weight is less than 25, and to stop when the mouse weight is greater than or equal to 25. 
+
+In this while loop we will require both the vector index, so that it can be increased at each iteration, and the mouse weight at each index. Before the while loop we need to assign the value 1 to `i` and the mouse weight at index `i` to `wt`. In each iteration we will need to update the index, and then use the index to update the `wt` variable:
+
+```{r}
+i <- 1
+wt <- mouse_wts[i]
+while (wt < 25) {
+  i <- i + 1
+  wt <- mouse_wts[i]
+}
+"Index of first mouse over 25 grams:"
+i
+"Weight of first mouse over 25 grams:"
+wt
+```
+
+What if there were no mice in the vector that weighed 25 grams or more? The loop will stop functioning once it reaches the end of the list. We can add a second stopping condition, stop when the index `i` is greater than the number of elements in the vector. Thus, the while loop should continue if `wt` is less than 25, and if `i` is less than or equal to the length of the vector.
+
+```{r}
+i <- 1
+wt <- mouse_wts[i]
+while (wt < 25 & i <= length(mouse_wts)) {
+  i <- i + 1
+  wt <- mouse_wts[i]
+}
+"Index of first mouse over 25 grams:"
+i
+"Weight of first mouse over 25 grams:"
+wt
+```
+
+---
+
+### Counting Indices
+
+How many integers, starting from 1 and increasing, does it take to add to 10? 
+
+This question can be answered with a while loop. We can set up two variables: `total` to keep track of the sum of the numbers and `num` to keep track of the number we are on for a particular iteration. The logical expression will check if the total is less than 10, meaning the loop will stop when it reaches 10. 
+
+Within the while loop we will add `num` to the `total`, and then increase `num` by 1 to move on to the next integer.
+
+```{r}
+total <- 0
+num <- 1
+while (total < 10) {
+  total <- total + num
+  num <- num + 1
+}
+"Value of total:"
+total
+"Number of integers:"
+num
+```
+
+At first, this code may seem like it worked, but 1 + 2 + 3 + 4 = 10. Why did it output 5 for the number of integers to add to 10? 
+
+Let's examine the values of `total` and `num` at the start and end of each iteration to understand what happened:
+
+  FIRST ITERATION
+    START: `total` = 0; `num` = 1
+    add `num` to `total`; add 1 to `num`
+    END: `total` = 1; `num` = 2
+  SECOND ITERATION
+    START: `total` = 1; `num` = 2
+    add `num` to `total`; add 1 to `num`
+    END: `total` = 3; `num` = 3
+  THIRD ITERATION
+    START: `total` = 3; `num` = 3
+    add `num` to `total`; add 1 to `num`
+    END: `total` = 6; `num` = 4
+  FOURTH ITERATION
+    START: `total` = 6; `num` = 4
+    add `num` to `total`; add 1 to `num`
+    END: `total` = 10; `num` = 5
+  FIFTH ITERATION
+    START: `total` = 10; `num` = 5
+    STOPPING CONDITION MET
+
+Because the value of `num` is increased at the end of the loop, the `total` does not yet contain `num`. So the value of `num` after the loop stops running does not tell us how many integers it takes to add to 10. 
+
+How do we fix this? When you need to count indices in a while loop, we instead start with the index counter (in this case `num`) set to *zero*, and increase the value of the index counter at the *start* of the loop (before `num` is used to update `total`):
+
+```{r}
+total <- 0
+num <- 0
+while (total < 10) {
+  num <- num + 1
+  total <- total + num
+}
+"Value of total:"
+total
+"Number of integers:"
+num
+```
+
+This way the value of `num` represents the last value that was used when the stopping condition was met.
+
+---
+
+## 6.2.3 While Loop Applications
+
+---
+
+### Half of the Total RNA
+
+Let's look at a practical example of while loops in biological research. We will be using the same data set as the one we used in Supplement 6.1: brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain):
+
+```{r}
+brain_expression <- read.csv("/home/jovyan/Week.6/6.1.While.Loops/brain_expression.csv", stringsAsFactors = FALSE)
+brain_expression
+```
+
+As a refresher, each of the rows represents one of 15,271 genes. The first column is Ensembl Gene ID of each gene, which is a unique gene identifier. We will learn more about Ensembl Gene IDs later on in the course. The second to eleventh columns contain normalized gene expression values for 10 different brain tissues. 
+
+How can we determine the minimum number of genes that account for 50% of the total RNA in the midbrain? 
+
+Let’s look at a mini example with 8 genes (gene A to gene H) to see how this would work. The data frame below shows expression levels for each of these genes in a tissue:
+
+```{r}
+tissue_expression_example <- data.frame("gene"=c("A", "B", "C", "D", "E", "F", "G", "H"),
+                                        "expression"=c(0.02, 5.67, 7.51, 4.28, 3.73, 6.34, 1.74, 2.09))
+tissue_expression_example
+```
+
+These values are proportional to each other, so we can calculate how much of the total RNA the gene accounts for in the tissue. First we must calculate the total expression and identify the value of half the total expression:
+
+```{r}
+half_expr <- sum(tissue_expression_example$expression)/2
+half_expr
+```
+
+Now we need to determine the minimum number of genes with expression values that add to 15.69. To do this we need to start with the most expressed gene, then add the second most expressed gene, etc. 
+
+We can sort the expression levels using the `sort()` function, with the optional argument `decreasing` set to `TRUE`. This will sort in order from highest to lowest expression:
+
+```{r}
+expr_sorted <- sort(tissue_expression_example$expression, decreasing = TRUE)
+expr_sorted
+```
+
+Now we can create a while loop to sum up the values, starting from the value at index 1, until we get to half the total expression. The while loop will continue to add expression values to `cumulative_expr` until it passes the value of half the total expression. We will use the technique of increasing the index at the start of the loop so that at the end we can interpret the index as the number of genes:
+
+```{r}
+cumulative_expr <- 0
+index <- 0
+while (cumulative_expr < half_expr) {
+  index <- index + 1
+  cumulative_expr <- cumulative_expr + expr_sorted[index]
+}
+index 
+```
+
+With our small example we can easily verify that this is correct:
+
+```{r}
+"Sum of two most expressed genes:"
+7.51 + 6.34
+"Sum of three most expressed genes:"
+7.51 + 6.34 + 5.67
+```
+
+It takes 3 genes to surpass half of the total expression (15.69). Thus, three genes account for half of the total expression in this tissue.
+
+Now let's look at a real example: What is the minimum number of genes that account for 50% of the total RNA in the midbrain? 
+
+```{r}
+# Determine half of the total expression
+half_expr <- sum(brain_expression$midbrain)/2
+
+# Sort the expression values in the midbrain in decreasing order
+midbrain_expr_sorted <- sort(brain_expression$midbrain, decreasing = TRUE)
+
+# Use a while loop to identify the number of genes that account for half the total expression
+cumulative_expr <- 0
+index <- 0
+while (cumulative_expr < half_expr) {
+  index <- index + 1
+  cumulative_expr <- cumulative_expr + midbrain_expr_sorted[index]
+}
+index
+```
+
+In the midbrain, the 2851 most highly expressed genes account for half of the total expression. 
+
+What percentage of genes is this?
+
+```{r}
+100*index/length(midbrain_expr_sorted)
+```
+
+Just 18.7% of all genes account for half of the total expression in the midbrain. 
+
+---

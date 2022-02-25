@@ -1,0 +1,311 @@
+---
+title: "6.3 Loop Applications"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+
+## 6.3.1: Nested Loops
+
+---
+
+### Nested For Loops
+
+Often we need to use nested for loops, which allows us to loop through each combination of items in two sets:
+
+    for (i in items_1) {
+      for (j in items_2) {
+        ... code block ...
+      }
+    }
+
+In this representation of nested loops, we go through each item `i` in `items_1` and each item `j` in `items_2`. The sets, `items_1` and `items_2`, can be the same set of items or two different sets of items, but the iteration variable names, `i` and `j`, must always be different from one another. 
+
+In total, the number of iterations of two nested for loops is the product of the length of each set of items: `length(items_1) * length(items_2)`. If you nested a third for loop, it would the product of all three sets: `length(items_1) * length(items_2) * length(items_3)`.
+
+If `items_1` contains three elements and `items_2` contains three elements, there will be a total of 3 x 3 = 9 iterations.
+
+To better understand how nested for loops work, let's look at an example. The outer loop iterates through a vector containing the numbers 1 to 3, and the inner loop iterates through a vector that contains numbers 5 and 10. At each iteration, `num1` and `num2` are multiplied and the equation along with the result is pri ted to the screen:
+
+```{r}
+for (num1 in 1:3) {
+  for (num2 in c(5, 10)) {
+    product <- num1 * num2
+    print(paste(num1, "x", num2, "=", product))
+  }
+}
+```
+
+In the first iteration of the outer loop, `num_1` is equal to 1. While `num_1` is equal to 1, the inner loop runs. In the first iteration of the inner loop, `num_2` is equal to 5, and then `num_2` is equal to `10`. When this loop finishes, the outer loop will move on to the next value of `num_1`.
+
+---
+
+### Looping through Matrices
+
+One of the key uses of nested for loops is looping through rows and columns in a matrix. Matrices can be looped through using row and column indices:
+    
+    for (row in 1:nrow(matrix_name)) {
+      for (col in 1:ncol(matrix_name)) {
+        ... matrix_name[row,col] ...
+      }
+    }
+
+Or with row and column names:
+
+    for (row_name in rownames(matrix_name)) {
+      for (col_name in colnames(matrix_name)) {
+        ... matrix_name[row_name,col_name] ...
+      }
+    }
+
+Each of the above sets of loops will loop through each row, and then through each column. 
+
+Let's look at an example. Below is a matrix containing the value NA for each element:
+
+```{r}
+my_matrix <- matrix(NA, nrow=3, ncol=2)
+my_matrix
+```
+
+Let's loop through each row and column in the matrix and change the value of the element so that it is the product of the row and column indices:
+
+```{r}
+for (row_num in 1:nrow(my_matrix)) {
+  for(col_num in 1:ncol(my_matrix)) {
+    my_matrix[row_num,col_num] <- row_num * col_num
+    print(my_matrix)
+  }
+}
+```
+
+If we look at the output, we can see that in the first iteration, the value at row 1, column 1 was changed to 1. In the second iteration, the value at row 1, column 2 was changed to 2. If you continue to look at output you can see that each row was completed column by column, because the row indices are in the outer loop.
+
+--- 
+
+We will again look at examples using brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain):
+
+```{r}
+brain_expression <- read.csv("/home/jovyan/Week.6/6.3.Applying.Loops/brain_expression.csv", stringsAsFactors = FALSE)
+brain_expression
+```
+
+As a refresher, each of the rows represents one of 15,271 genes. The first column is Ensembl Gene ID of each gene, which is a unique gene identifier. We will learn more about Ensembl Gene IDs later on in the course. The second to eleventh columns contain normalized gene expression values for 10 different brain tissues. 
+
+The names of these tissues (which are the column names for columns 2-11) are saved in the vector `brain_tissues`:
+
+```{r}
+brain_tissues <- colnames(brain_expression)[2:11]
+brain_tissues
+```
+
+Let's create a matrix of the correlation of expression between all 10 brain tissues. We will start by creating an empty matrix with 10 rows and 10 columns, which each value set to NA. The names of the 10 tissues are added as row and column names:
+
+```{r}
+tissue_expr_cor <- matrix(NA, nrow=10, ncol=10)
+rownames(tissue_expr_cor) <- brain_tissues
+colnames(tissue_expr_cor) <- brain_tissues
+tissue_expr_cor
+```
+
+In the 6.1 Lecture Supplement we calculated the correlation in gene expression between the amygdala and each of the other brain tissues (including itself). This time we will do what we did for the amygdala, but this time for all pairing of all 10 tissues. We can use nested for loops, first looping through the row names of the matrix and then the column names. Within each iteration we can calculate the expression correlation between the two tissues, round it, and add the value to our `tissue_expr_cor` matrix:
+
+```{r}
+for (rowname in rownames(tissue_expr_cor)) {
+  for (colname in colnames(tissue_expr_cor)) {
+    r <- cor(brain_expression[, rowname], brain_expression[, colname])
+    r <- round(r, 2)
+    tissue_expr_cor[rowname, colname] <- r
+  }
+}
+tissue_expr_cor
+```
+
+---
+
+### Nesting For and While Loops
+
+We can also nest while loops within while loops, for loops within while loops, and while loops within for loops. Let's look at an example of the latter. 
+
+In the 6.2 Lecture Supplement we calculated the minimum number of genes that accounted for 50% of the RNA expression in the midbrain, and used that value to determine the percentage of genes that accounted for 50% of the RNA. How could we calculate the percentage of genes the accounted for 50% of the expression for all 10 tissues? 
+
+We could use a for loop to go through the tissues, and a while loop to get the number of genes. Within the for loop, we will sort expression values for the current tissue, determine half of the expression, and use the same nested while loop that we used in the 6.2 Lecture Supplement to calculate the number of genes. After the while loop terminates, we can calculate and add the percentage to our vector within the for loop.
+
+In previous nested loops we did not include any code in between the declaration of the outer and inner loops, however we can write code that occurs for each item in the outer loop before running the inner loop:
+
+```{r}
+percent_genes_for_half_RNA <- c()
+for (tissue in brain_tissues) {
+  # sort gene expression values for the current tissue
+  expr <- sort(brain_expression[, tissue], decreasing = TRUE)
+  # calculate what half of the total expression is
+  half_expr <- sum(expr)/2
+  # prepare variables for the inner while loop
+  cumulative_expr <- 0
+  index <- 0
+  while (cumulative_expr <= half_expr) {
+    # update index
+    index <- index + 1
+    # add current gene expression value to cumulative total for the current tissue
+    cumulative_expr <- cumulative_expr + expr[index]
+  }
+  # add % of genes that make up half of the expression to the tissue vector
+  percent_genes_for_half_RNA[tissue] <- 100*index/length(expr)
+}
+percent_genes_for_half_RNA
+```
+
+When we look at the output we can see that for all of the tissues, around 19% of genes account for half of all expression.
+
+---
+
+## 6.3.2: Vectorization
+
+---
+
+### Non-vectorized vs Vectorized Code
+
+In the 6.1 Lecture Supplement we looked at a real-life example that is similar to a for loop: a scientist is working in the lab with 6 samples, and for each sample the scientist needs to add 10 uL of lysis buffer and then place the sample on ice:
+
+    For X in sample 1, sample 2, sample 3, sample 4, sample 5, sample 6:
+      - Add 10 uL of lysis buffer to X
+      - Place X on ice
+
+In this example, the biologist does one sample and then moves onto the next. But what if all the tasks could be performed simultaneously? In this example there are two possible solutions:
+- six scientists could perform the task, each performing the task for one sample
+- one scientist using a multichannel pipette adds the buffer to all of the samples at the same time
+
+In R, speeding up a task like this is called *vectorization*. Most functions that we have learned and applied so far are vectorized: they perform their task simultaneously for all of the items they are provided. 
+
+Vectorized functions we have learned so far include `log()`, `round()`, `sqrt()`, `gsub()`, and `grepl()`.
+
+Vectorized code is much more efficient and concise than non-vectorized code. Let's compare non-vectorized vs vectorized code to take the natural log of the numbers 1 through 4, and adding them to a vector `y`.
+
+With a for loop (non-vectorized), we can do the following:
+
+```{r}
+y <- c()
+for (x in c(1:4)) {
+  y <- c(y, log(x))
+}
+y
+```
+
+The `log()` function in R, however is vectorized. If you run it on a vector, it will be applied to each item in the vector:
+
+```{r}
+y <- log(1:4)
+y
+```
+
+It is clear that this code is more concise, but it is also faster? To time how long a piece of code takes to run we can use the `Sys.time()` function, which outputs the current time when it is executed.
+
+First, let's calculate how long the non-vectorized code (for loop) takes to run:
+
+```{r}
+start_time <- Sys.time()
+y <- c()
+for (x in c(1:4)) {
+  y <- c(y, log(x))
+}
+end_time <- Sys.time()
+
+non_vectorized_code_runtime <- end_time - start_time
+"Runtime:"
+non_vectorized_code_runtime
+```
+
+Now let's calculate the runtime for vectorized code:
+
+```{r}
+start_time <- Sys.time()
+y <- log(1:4)
+end_time <- Sys.time()
+
+vectorized_code_runtime <- end_time - start_time
+"Runtime:"
+vectorized_code_runtime
+```
+
+Your runtimes may differ, but the runtimes during the writing of this supplement were:
+- Non-vectorized code runtime: 0.4954598 seconds
+- Vectorized code runtime: 0.1537697 seconds
+
+The vectorized code ran 3.22x faster. This may not seem important as both run times are less than 1 second, but when we are working with much larger vectors this becomes very important.
+
+Let's look at the same example, but take the log of the numbers 1 through 100,000 (this code block may take a while to run!):
+
+```{r}
+# Non-vectorized code
+start_time <- Sys.time()
+y <- c()
+for (x in c(1:100000)) {
+  y <- c(y, log(x))
+}
+end_time <- Sys.time()
+non_vectorized_code_runtime <- end_time - start_time
+
+# Vectorized code
+start_time <- Sys.time()
+y <- log(1:100000)
+end_time <- Sys.time()
+vectorized_code_runtime <- end_time - start_time
+
+# Runtimes
+"Non-vectorized code runtime:"
+non_vectorized_code_runtime
+"Vectorized code runtime:"
+vectorized_code_runtime
+"Vectorized code is X times faster:"
+as.numeric(non_vectorized_code_runtime)/as.numeric(vectorized_code_runtime)
+```
+
+Using vectorized functions is extremely helpful when we are working with large datasets, and most biological datasets are indeed very large.
+
+---
+
+### Vectorizing Your Code
+
+How do you know when to use a loop or vectorized code? Here is a good guideline:
+
+| Do you know how many times the task needs to be repeated? 
+  |--- NO  -> use a while loop
+  |--- YES -> use a for loop or vectorized code
+       | Is there an R function that can perform some or all of the task?
+         |--- NO  -> use a for loop
+         |--- YES -> use a vectorized function
+      
+There is also a way to write your own vectorized functions. While we will not be focusing on the method in this course, it will be briefly covered in the 7.1 supplement.
+
+Let's look at some practical examples in which we can use vectorized code using the brain tissue expression data.
+
+Calculate the mean expression level for each brain tissue. How many times do we need to perform this task? 10 times, once per tissue. Therefore, we should use either a for loop or a vectorized function. First let's see how we would do this with a for loop:
+
+```{r}
+tissue_expr_means <- c()
+for (tissue in brain_tissues) {
+  tissue_mean <- mean(brain_expression[, tissue])
+  tissue_expr_means <- c(tissue_expr_means, tissue_mean)
+}
+tissue_expr_means
+```
+
+This works, however the function `colMeans()` calculates the mean for each column in a data frame or matrix automatically. We can vectorize the above code by using the `colMeans()` function instead:
+
+```{r}
+tissue_expr_means <- colMeans(brain_expression[,2:11])
+tissue_expr_means
+```
+
+In fact, the nested loops we used earlier to calculate the correlation between expression values for each pair of tissues can also be vectorized using the `cor()` function:
+
+```{r}
+cor(brain_expression[,2:11])
+```
+
+Other useful vectorized functions that are frequently used with data frames include `colSums()` and `rowMeans()`.
+
+---
