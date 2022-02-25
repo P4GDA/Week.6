@@ -19,8 +19,8 @@ At the end of this tutorial you should be able to:
 * Write a while loop with the correct syntax
 * Loop through vectors
 * Loop through vector indices and data frame rows
-* Modify data structures from within a for loop
-* Determine how to implement a for loop for specific applications
+* Modify data structures from within a while loop
+* Determine how to implement a while loop for specific applications
 
 **NOTE: the dplyr package has already been loaded for you**
 
