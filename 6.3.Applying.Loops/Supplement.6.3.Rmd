@@ -309,3 +309,72 @@ cor(brain_expression[,2:11])
 Other useful vectorized functions that are frequently used with data frames include `colSums()` and `rowMeans()`.
 
 ---
+
+### Code Vectorization Examples
+
+More examples of vectorization can be shown using this data set of containing genes along with the chromosome each gene is on and the strand. The data frame contains the following columns:
+`Gene.ID` - Ensembl unique gene identifier
+`Chromosome` - the name of the chromosome each gene is on
+`Strand` - whether the gene is on the positive strand (+) or the negative strand (-)
+
+```{r}
+genes_and_chromosomes <- read.csv("/home/jovyan/Week.6/6.3.Applying.Loops/genes_and_chromosomes.csv", stringsAsFactors = FALSE)
+genes_and_chromosomes
+```
+
+To create a vector containing the number of genes on chromosome X or Y, we could write a for loop to go through each row and check if it is on one of these two chromosomes:
+
+```{r}
+num_genes_X_Y <- 0
+for (gene in 1:nrow(genes_and_chromosomes)) {
+  if (genes_and_chromosomes[gene, "Chromosome"] == "X" | genes_and_chromosomes[gene, "Chromosome"] == "Y") {
+    num_genes_X_Y <- num_genes_X_Y + 1
+  }
+}
+num_genes_X_Y
+```
+
+However, it can also easily be vectorized by using the `nrow()` and `filter()` functions:
+
+```{r}
+nrow(filter(genes_and_chromosomes, Chromosome == "X" | Chromosome == "Y"))
+```
+
+For each of the chromosomes in our data frame, how many genes does it have on the positive strain? Using nested for loops we can create a list called "chromosome_pos_genes", with each list element having the name of a chromosome and containing the number of positives strand genes on that chromosome. 
+
+Note that the `unique()` function returns the unique values in a vector. For example:
+
+```{r}
+unique(genes_and_chromosomes$Chromosome)
+```
+
+```{r}
+# Write and execute your code here
+chromosome_pos_genes <- list()
+for (chr in unique(genes_and_chromosomes$Chromosome)) {
+  chr_rows <- filter(genes_and_chromosomes, Chromosome == chr)
+  positive_strand_genes <- 0
+  for (row in 1:nrow(chr_rows)) {
+    if (chr_rows$Strand[row] == "+") {
+      positive_strand_genes <- positive_strand_genes + 1
+    }
+  }
+  chromosome_pos_genes[[chr]] <- positive_strand_genes
+}
+chromosome_pos_genes
+```
+
+The inner loop in the above code can be vectorized using the same technique as we used when getting the number of genes on the X and Y chromosomes: `nrow(filter())`
+
+```{r}
+# Write and execute your code here
+chromosome_pos_genes <- list()
+for (chr in unique(genes_and_chromosomes$Chromosome)) {
+  chr_rows <- filter(genes_and_chromosomes, Chromosome == chr)
+  positive_strand_genes <- nrow(filter(chr_rows, Strand == "+")) 
+  chromosome_pos_genes[[chr]] <- positive_strand_genes
+}
+chromosome_pos_genes
+```
+
+---
