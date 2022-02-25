@@ -150,9 +150,9 @@ for (row in 1:nrow(clinvar_data)) {
 
 Write code to determine the number of benign or likely benign variants in the `clinvar_data` data frame by vectorizing the above code. Save the number of benign or likely benign variants to a variable called "num_benign_var_2".
 
-Hint: The number of `TRUE` values in a logical vector can be counted using the `length()` and `which()` functions:
+Hint: Use the `nrow()` and `filter()` funcions.
 
-    length(which(logical vector))
+    nrow(filter(data.frame, logical expression on columns))
     
 Is there a way to get a logical vector indicating which elements in `clinvar_data$clinical.significance` are "Benign" or "Likely_benign"?
 
