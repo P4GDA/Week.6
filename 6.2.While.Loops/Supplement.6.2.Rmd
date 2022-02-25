@@ -127,6 +127,29 @@ while (i < 3) {
 
 You can see that an infinite loop will go on forever because the conditional statement will never be equal to `FALSE`. In this case, `i` was always equal to 1 and thus always less than 3.
 
+To further understand the value of the variable in the logical expression in each iteration of a while loop, consider the following loop:
+
+```{r}
+num <- 1
+while (num < 100) {
+  print(num)
+  num <- num * 2
+}
+```
+
+In each iteration `num` is printed, and then multiplied by 2, until `num` is greater than 100. What is the value of `num` at the start and end of iteration? By adding print statements to the loop we can see what happens. The iteration is counted with a variable called "iter".
+
+```{r}
+iter <- 1
+num <- 1
+while (num < 100) {
+  print(paste("At the START of iteration", iter, "num =", num))
+  num <- num * 2
+  print(paste("At the END   of iteration", iter, "num =", num))
+  iter <- iter + 1
+}
+```
+
 ---
 
 ## 6.2.2: While Loop Techniques
