@@ -19,8 +19,8 @@ At the end of this tutorial you should be able to:
 * Write a while loop with the correct syntax
 * Loop through vectors
 * Loop through vector indices and data frame rows
-* Modify data structures from within a for loop
-* Determine how to implement a for loop for specific applications
+* Modify data structures from within a while loop
+* Determine how to implement a while loop for specific applications
 
 **NOTE: the dplyr package has already been loaded for you**
 
@@ -141,7 +141,9 @@ Write a while loop to add numbers to the `fibonacci_sequence` vector until the v
 
 ---
 
-Split the RNA sequence in `RNA_seq` into codons using a while loop and add each codon to the vector `codons` below. Hint: Use the `nchar()` function to make the loop work for any length of RNA sequence (not just the one below). You should also use the `substr()` function.
+Split the RNA sequence in `RNA_seq` into codons using a while loop and add each codon to the vector `codons` below. 
+
+Hints: Use the `nchar()` function to make the loop work for any length of RNA sequence (not just the one below). If You should also use the `substr()` function. The first codon can be retrieved using the code: `substr(1, 3, RNA_seq)`. The stopping condition of the loop should involve making sure your values for extracting codons do not go past `nchar(RNA_seq)`.
 
 ```{r}
 RNA_seq <- "AUGGCAUUCCUACGG"
@@ -219,6 +221,8 @@ DMD_variants
 What percentage of DMD variants are in the first 25% of bases of the DMD gene?
 
 Using a while loop, count the number of variants in the first 25% of bases of the DMD gene (remember the gene starts at 33211549 because it is on the negative strand). Use the result to assign the percentage of DMD variants that are in the first 25% of bases of the DMD gene to a variable named "percent_var_in_first_quarter".
+
+Hint: These variants must all be at positions with bases greater than 33211549 - 25% of the length of the DMD gene.
 
 ```{r}
 # Write and execute your cod here

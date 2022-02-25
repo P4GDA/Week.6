@@ -25,7 +25,7 @@ At the end of this tutorial you should be able to:
 
 ---
 
-## 6.3.1: Nested For Loops
+## 6.3.1: Nested Loops
 
 ---
 
@@ -75,7 +75,7 @@ significance <- c("Benign", "Likely_benign", "Likely_pathogenic", "Other", "Path
 ```
 **Check your answer by running the above block** 
 
-Write nested for loops to fill the values in the `variant_significance_by_disease` matrix. The matrix should be filled such that the value at `variant_significance_by_disease["Benign", "type.2.diabetes"]` is the number of variants associated with type 2 diabetes mellitus that have uncertain clinical significance.
+Write nested for loops to fill the values in the `variant_significance_by_disease` matrix. The matrix should be filled such that the value at `variant_significance_by_disease["type.2.diabetes", "Benign"]` is the number of variants associated with type 2 diabetes mellitus that have "Benign" clinical significance.
 
 ```{r}
 # Write and execute your code here
@@ -87,7 +87,8 @@ Write nested for loops to fill the values in the `variant_significance_by_diseas
 ```
 **Check your answer by running the above block** 
 
-Write nested for loops to loop through *positional* row and column indices of the `variant_significance_by_disease` matrix and divide the element by the number of disease variants for the appropriate disease.
+Write nested for loops to loop through *positional* row and column indices of the `variant_significance_by_disease` matrix and divide the element by the number of disease variants for the appropriate disease. Replace each element in `variant_significance_by_disease` with the new value.
+Hint: Loop through the diseases (row indices) in the outer loop and clinical significance categories (column indices) in the inner loop. You may want to include a line of code wihtin the outer loop that is not in the inner loop.
 
 ```{r}
 # Write and execute your code here
@@ -99,13 +100,7 @@ Write nested for loops to loop through *positional* row and column indices of th
 ```
 **Check your answer by running the above block** 
 
----
-
-## 6.3.2: Nested For and While Loops
-
----
-
-The questions in this section will not use the ClinVar data.
+The rest of the questions in this section will not use the ClinVar data.
 
 The factorial of n is the product of all positive integers from 1 to n. For example, 4 factorial is 1 x 2 x 3 x 4 = 24.
 Use nested loops to fill the vector `factorials` with the factorial of 1 to 10. One loop should be a for loop, and one should be a while loop.
@@ -121,7 +116,9 @@ factorials <- c()
 ```
 **Check your answer by running the above block** 
 
-Use nested loops to create a list called "RNA_seqs_codons". Each list element should contain the codons in one of the RNA sequences in `RNA_seqs`. The name of the element should be the full RNA sequence.
+Use nested loops to create a list called "RNA_seqs_codons". Each list element should contain the codons in one of the RNA sequences in `RNA_seqs`. The name of the element should be the full RNA sequence. 
+
+Hint: There was a similar question in tutorial 6.2. Your answer from that question can be used as part of the answer to this question.
 
 ```{r}
 RNA_seqs <- c("AUGGCAUUCCUACGG", "CUGAGAGCUUCCCGAUUU", "AAUGCUUGGACUCUC")
@@ -136,7 +133,7 @@ RNA_seqs <- c("AUGGCAUUCCUACGG", "CUGAGAGCUUCCCGAUUU", "AAUGCUUGGACUCUC")
 
 ---
 
-## 6.3.3: Vectorization
+## 6.3.2: Vectorization
 
 ---
 
@@ -152,6 +149,12 @@ for (row in 1:nrow(clinvar_data)) {
 ```
 
 Write code to determine the number of benign or likely benign variants in the `clinvar_data` data frame by vectorizing the above code. Save the number of benign or likely benign variants to a variable called "num_benign_var_2".
+
+Hint: The number of `TRUE` values in a logical vector can be counted using the `length()` and `which()` functions:
+
+    length(which(logical vector))
+    
+Is there a way to get a logical vector indicating which elements in `clinvar_data$clinical.significance` are "Benign" or "Likely_benign"?
 
 ```{r}
 # Write and execute your code here
@@ -181,6 +184,8 @@ gene_chromosomes
 
 Write code to create the same vector as above by vectorizing the code in the above block. Call the vector you create "gene_chromosomes_2".
 
+Hint: Is there a way to reduce `clinvar_data` to only the "chromosome" and "gene" columns and to get all the unique rows?
+
 ```{r}
 # Write and execute your code here
 
@@ -195,7 +200,7 @@ Write code to create the same vector as above by vectorizing the code in the abo
 
 For each of the genes in our data frame, how many pathogenic or likely pathogenic variants does it have?
 
-Use nested loops to create a list called "pathogenic_gene_variants". Each list element should contain the number of pathogenic or likely pathogenic variants in each gene in `clinvar_data`. The name of the element should be the gene name.
+Use nested for loops to create a list called "pathogenic_gene_variants". Each list element should contain the number of pathogenic or likely pathogenic variants in each gene in `clinvar_data`. The name of the element should be the gene name. The outer for loop should iterate through the unique genes in `clinvar_data`. 
 
 Hint: Use the `unique()` function.
 
