@@ -116,7 +116,9 @@ factorials <- c()
 ```
 **Check your answer by running the above block** 
 
-Use nested loops to create a list called "RNA_seqs_codons". Each list element should contain the codons in one of the RNA sequences in `RNA_seqs`. The name of the element should be the full RNA sequence.
+Use nested loops to create a list called "RNA_seqs_codons". Each list element should contain the codons in one of the RNA sequences in `RNA_seqs`. The name of the element should be the full RNA sequence. 
+
+Hint: There was a similar question in tutorial 6.2. Your answer from that question can be used as part of the answer to this question.
 
 ```{r}
 RNA_seqs <- c("AUGGCAUUCCUACGG", "CUGAGAGCUUCCCGAUUU", "AAUGCUUGGACUCUC")
