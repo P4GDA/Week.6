@@ -25,7 +25,7 @@ At the end of this tutorial you should be able to:
 
 ---
 
-## 6.3.1: Nested For Loops
+## 6.3.1: Nested Loops
 
 ---
 
@@ -100,13 +100,7 @@ Hint: Loop through the diseases (row indices) in the outer loop and clinical sig
 ```
 **Check your answer by running the above block** 
 
----
-
-## 6.3.2: Nested For and While Loops
-
----
-
-The questions in this section will not use the ClinVar data.
+The rest of the questions in this section will not use the ClinVar data.
 
 The factorial of n is the product of all positive integers from 1 to n. For example, 4 factorial is 1 x 2 x 3 x 4 = 24.
 Use nested loops to fill the vector `factorials` with the factorial of 1 to 10. One loop should be a for loop, and one should be a while loop.
@@ -137,7 +131,7 @@ RNA_seqs <- c("AUGGCAUUCCUACGG", "CUGAGAGCUUCCCGAUUU", "AAUGCUUGGACUCUC")
 
 ---
 
-## 6.3.3: Vectorization
+## 6.3.2: Vectorization
 
 ---
 
