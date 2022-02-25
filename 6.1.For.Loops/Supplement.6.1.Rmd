@@ -150,7 +150,13 @@ mouse_wts <- c(23.7, 21.4, 26.8, 28.3)
 mouse_samples <- c()
 ```
 
-We can loop through each positional index in mouse weights, and use the `paste()` function to paste together the word "mouse" and the current index with an underscore in between. Then we can add this sample name to our `mouse_samples` vectors:
+The `paste()` function takes character values and a separator value to combine multiple character values into value, each separated by the separator value. For example, to add together the words "sample", "A", and "control" separated by dashes we can use the `paste()` function: 
+
+```{r}
+paste("sample", "A", "control", sep="-")
+```
+
+We can loop through each positional index in mouse weights, and use the `paste()` function to paste together the word "mouse" and the current index with an underscore in between. Then we can add this sample name to our `mouse_samples` vector:
 
 ```{r}
 for (i in 1:length(mouse_wts)) {
@@ -164,9 +170,9 @@ When we look at the value of `mouse_samples`, we can see that we have a vector w
 
 Another reason to loop through the positional indices of a vector is to be able to access both the index AND the value of each element.
 
-For example, if we want to go through each of the elements in this vector of mouse samples and edit (replace) each value, we need to be able to access the sample name to edit it, but also the index of the sample, so that we can replace the value at the appropriate location.
+For example, if we want to go through each of the elements in this vector of mouse samples and edit (replace) each value based on the current value, we need to be able to access value as well as the index of the value. The index allows us to replace the value at the correct index.If we only know an element value, we cannot access the index, but if we know the positional index of an element we can also access the value. 
 
-If we only know an element value, we cannot access the index, but if we know the positional index of an element we can also access the value. Thus we need to loop through indices so that we can retrieve the value of the element at the appropriate index:
+For example, to replace each sample name with a shortened version by replacing the letters "ouse" with "", we need the value of the sample name for replacement, and the index of the sample name to assign the new name.
 
 ```{r}
 for (i in 1:length(mouse_samples)) {
@@ -177,11 +183,24 @@ for (i in 1:length(mouse_samples)) {
 mouse_samples
 ```
 
-At the start of the above loop we retrieve the value at the index, so that in each iteration, `i` contains the index and `sample` contains the value at that index. 
+At the start of the above loop we retrieve the value at the index, so that in each iteration, `i` contains the index and `sample` contains the value at that index. With `gsub()` we can replace the letters "ouse" in `sample` with nothing, shortening the sample name. Finally, we can use the index again to replace the value in `mouse_samples` at the appropriate index with the new shortened name. 
 
-With `gsub()` we can replace the letters "ouse" in `sample` with nothing, shortening the sample name. 
+Using the `mouse_samples` vector, names can be added to the `mouse_wts` vector:
 
-Finally, we can use the index again to replace the value in `mouse_samples` at the appropriate index with the new shortened name. 
+```{r}
+names(mouse_wts) <- mouse_samples
+mouse_wts
+```
+
+This vector can also be looped through using the names of the vector. For example, to change each mouse weight in the vector from grams to pounds, the name indices can be looped through:
+
+```{r}
+for (sample in names(mouse_wts)) {
+  wt_pounds <- mouse_wts[sample] * 0.00220462
+  mouse_wts[sample] <- wt_pounds
+}
+mouse_wts
+```
 
 ---
 
@@ -191,7 +210,7 @@ Finally, we can use the index again to replace the value in `mouse_samples` at t
 
 ### Expression Correlation
 
-Let's look at some practical examples of for loops in biological research. We will be using brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain). 
+Now we will examine some practical examples of for loops in biological research. We will be using brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain). 
 
 ```{r}
 brain_expression <- read.csv("/home/jovyan/Week.6/6.1.For.Loops/brain_expression.csv", stringsAsFactors = FALSE)
@@ -205,11 +224,21 @@ brain_tissues <- colnames(brain_expression)[2:11]
 brain_tissues
 ```
 
-If we want to calculate the correlation in gene expression between the amygdala and each of the other brain tissues (including itself), we could write out the correlation function 10 times. Alternatively, we can loop through each tissue using a for loop and calculate the correlation between the tissue in the current iteration and the amygdala.
+To calculate the correlation (R) of tissue expression in the amygdala and the thalamus, the `cor()` function can be used. 
 
-For this loop, our items will be each of the elements the `brain_tissues` vector. In each iteration, we can determine the correlation between the amygdala and the iteration tissue by retrieving the values in both columns and using them as arguments to the `cor()` function. 
+```{r}
+r <- cor(brain_expression[, "amygdala"], brain_expression[, "thalamus"])
+r <- round(r, 2)
+paste("amygdala and thalamus:", r)
+```
 
-Next we round the resulting correlation and use the `print()` and `paste()` functions to paste together and output the character values "amygdala and", the iteration tissue name, a colon, and the correlation:
+To output the correlation in a readable format, the correlation was also rounded and the `paste()` function was used. Note that the default value for the `sep` argument in the `paste()`  function is a single space " ".
+
+If we want to calculate the correlation in gene expression between the amygdala and each of the other brain tissues (including itself), we could write out the above code 10 times for a total of 30 lines of code.
+
+Alternatively, we can loop through each tissue using a for loop and calculate the correlation between the tissue in the current iteration and the amygdala.
+
+For this loop, our items will be each of the elements the `brain_tissues` vector. In each iteration, we can determine the correlation between the amygdala and the iteration tissue by retrieving the values in both columns and using them as arguments to the `cor()` function. Then the resulting correlation is rounded and output using the `print()` and `paste()` functions to provide information about which tissues are being compared:
 
 ```{r}
 for (tissue in brain_tissues) {
@@ -219,7 +248,7 @@ for (tissue in brain_tissues) {
 }
 ```
 
-If we did not use a for loop, we would need 30 lines of code instead to produce the same output instead of the five lines that constitute our loop.
+This is much easier than writing the 30 lines of code that would be needed otherwise.
 
 ---
 
@@ -227,7 +256,7 @@ If we did not use a for loop, we would need 30 lines of code instead to produce 
 
 So far we have been writing loops to iterate through vectors or vector indices. It is often also helpful to loop through data frame row indices. This allows you to access all of the values in a particular row within the loop.
 
-The hindbrain is composed of the pons, the medulla oblongata, and the cerebellum. In the `brain_expression` data frame, there is one column for `cerebellum` and one for `pons.and.medulla`. If we wanted to know the maximum expression of each gene in any component of the hindbrain, we could add a new column to contain the maximum expression of each gene. To do this we will need to determine whether the "cerebellum" column value or the "pons.and.medulla" column is higher the expression value.
+The hindbrain is composed of the pons, the medulla oblongata, and the cerebellum. In the `brain_expression` data frame, there is one column for `cerebellum` and one for `pons.and.medulla`. If we wanted to know the maximum expression of each gene in any component of the hindbrain, we could add a new column to contain the maximum expression of each gene. To do this we will need to determine the highest expression of the "cerebellum" column value and the "pons.and.medulla" column value.
 
 First, we can add a new column called "hindbrain.max" to the `brain_expression` data frame with all values equal to `NA`. The for loop iterates through each row index in `brain_expression`, retrieves the maximum value for that row between the two columns, and assigns the higher value to the `hindbrain.max` column for the row currently being iterated:
 
