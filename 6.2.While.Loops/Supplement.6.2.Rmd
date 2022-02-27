@@ -9,20 +9,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ---
 
-## 6.2.1: Introduction to While Loops
+## 6.2.1 Introduction to While Loops
 
 ---
 
 ### Conditional Repetitive Tasks
 
-Previously we learned about for loops, which are used to perform the same task multiple times, each time performing the task for a different item. There are other types of repetitive tasks as well, including conditional repetitive tasks. These are tasks that are performed until some end goal is reached. For example:
+Previously we learned about for loops, which are used to perform the same task multiple times, each time performing the task for a different item. There are other types of repetitive tasks as well, including conditional repetitive tasks. These are tasks that are performed until some end goal is reached. 
+
+For example:
 1. Go for a run every day until you can run 5 km without stopping
 2. Do the practice midterm for your course until you can answer all the questions correctly
 
 Both of these examples have a task that is done over and over again until a *stopping condition* is met. The stopping condition is like a goal: it is the condition that signals you can stop repeating the task, or in other words, terminate the process:
-1. Task: go for a run. 
+1. Task: go for a run
    Stopping condition: you can run 5 km without stopping
-2. Task: do the practice midterm. 
+2. Task: do the practice midterm
    Stopping condition: you answer all questions correctly on the practice midterm
 
 A conditional repetitive task can also have two stopping conditions. For example 2, the stopping condition could be: you answer all questions correctly on the practice midterm OR the midterm you are preparing for occurs.
@@ -55,14 +57,14 @@ This is called a *while loop*. A while loop performs the same task while a condi
 Notice that the *condition* of the while loop "ph < 7.2" is the opposite of the *stopping condition* "ph >= 7.2". 
 
 Going back to our previous examples, we can rephrase them the same way:
-1. While you cannot run 5km without stopping, go for a run every day
-2. While you cannot answer all the questions correctly on the practice midterm, do the practice midterm
+1. While you cannot run 5km without stopping, go for a run every day.
+2. While you cannot answer all the questions correctly on the practice midterm, do the practice midterm.
 
 ---
 
 ### While Loops
 
-A *while loop* performs the same programming task repeatedly until a logical expression == `TRUE`:
+A *while loop* performs the same programming task repeatedly until a logical expression is no longer `TRUE`:
 
     while (logical expression) {
       ... code block ...
@@ -72,7 +74,7 @@ This is equivalent to saying: "while logical expression is TRUE execute the code
 
 The syntax of a while loop will look similar to the syntax of conditional statements and of for loops. The code within the curly braces is preceded by a tab for greater clarity when reading code. 
 
-One of the most important aspects of a while loop is that the code block must alter some value that affects the result of the logical expression. A common format for this is:
+One of the most important aspects of a while loop is that the code block must alter some value that affects the result of the logical expression being considered. A common format for this is:
 
     i <- value
     while (logical expression using i) {
@@ -80,7 +82,7 @@ One of the most important aspects of a while loop is that the code block must al
       i <- updated_value 
     }
 
-To better understand how a while loop works, let's walk through an example. Let's say we want to take print all the numbers that are less than three, starting with the number one. 
+To better understand how a while loop works, let's walk through an example. Let's say we want to print all the numbers that are less than three, starting with the number one:
 
 ```{r}
 i <- 1
@@ -92,7 +94,7 @@ while (i < 3) {
 
 This while loop will continue to run while the value of `i` is less than 3 (`i` < 3). The stopping condition is therefore `i` >= 3. 
 
-In each iteration of the loop, `1` is added to `i`, altering the value of `i` and potentially altering the outcome of the logical expression. 
+In each iteration of the loop, 1 is added to `i`, altering the value of `i` and potentially altering the outcome of the logical expression. 
 
 Let's break down exactly what happens when this while loop is executed:
 
@@ -116,7 +118,7 @@ Before it starts, the value of `i` is 1.
 
 What happens if we don't change the value of `i` in the while loop above? Or in a more general case, what if the code within the curly braces does not alter a value that affects the result of the logical expression? 
 
-We would get an *infinite loop*. An infinite loop will run forever. For example, try running the code block below. The only way to stop it from continuing to run is to click the red square at the top right hand side of the code block. Depending on how quickly you stop the code chunk, you may want to remove the output with the "x" at the top right of the output block so that it doesn't take up so much space on your screen:
+We would get an *infinite loop*. An infinite loop will run forever. For example, try running the code block below. The only way to stop it from continuing to run is to click the red square at the top right hand side of the code block. Depending on how quickly you stop the code chunk, you may want to remove the output with the "x" at the top right of the output block so that it doesn't take up so much space on your screen.
 
 ```{r}
 i <- 1
@@ -137,7 +139,7 @@ while (num < 100) {
 }
 ```
 
-In each iteration `num` is printed, and then multiplied by 2, until `num` is greater than 100. What is the value of `num` at the start and end of iteration? By adding print statements to the loop we can see what happens. The iteration is counted with a variable called "iter".
+In each iteration `num` is printed, and then multiplied by 2, until `num` is greater than 100. What is the value of `num` at the start and end of iteration? By adding print statements to the loop we can see what happens. The iteration is counted with a variable named "iter".
 
 ```{r}
 iter <- 1
@@ -152,7 +154,7 @@ while (num < 100) {
 
 ---
 
-## 6.2.2: While Loop Techniques
+## 6.2.2 While Loop Techniques
 
 ---
 
@@ -168,7 +170,7 @@ i <- i + 1
 i
 ```
 
-At the end of a while loop, the value of variable that is altered in the while loop will fail the logical condition. In this case, the first time `i` will fail the logical expression `i <= 100` is when `i` reaches 101. It's important to keep this in mind, especially if you plan to use the variable in other code.
+At the end of a while loop, the value of the variable that is altered in the loop will fail the logical condition. In this case, the first time `i` will fail the logical expression `i <= 100` is when `i` reaches 101. It's important to keep this in mind, especially if you plan to use the variable in other code.
 
 ### Two Stopping Conditions
 
@@ -180,7 +182,7 @@ mouse_wts <- c(21.4, 23.7, 26.8, 28.3)
 
 We can write a while loop to identify the first mouse with a weight that is greater than or equal to 25 grams. We want the loop to run while the mouse weight is less than 25, and to stop when the mouse weight is greater than or equal to 25. 
 
-In this while loop we will require both the vector index, so that it can be increased at each iteration, and the mouse weight at each index. Before the while loop we need to assign the value 1 to `i` and the mouse weight at index `i` to `wt`. In each iteration we will need to update the index, and then use the index to update the `wt` variable:
+In this while loop we will require both the vector index, so that it can be increased at each iteration through the vector, and the mouse weight at each index. Before the while loop we need to assign the value 1 to `i` and the mouse weight at index `i` to `wt`. In each iteration we will need to update the index, and then use the index to update the `wt` variable.
 
 ```{r}
 i <- 1
@@ -195,7 +197,7 @@ i
 wt
 ```
 
-What if there were no mice in the vector that weighed 25 grams or more? The loop will stop functioning once it reaches the end of the list. We can add a second stopping condition, stop when the index `i` is greater than the number of elements in the vector. Thus, the while loop should continue if `wt` is less than 25, and if `i` is less than or equal to the length of the vector.
+What if there were no mice in the vector that weighed 25 grams or more? The loop will stop functioning once it reaches the end of the list and we would get an error. We can add a second stopping condition: stop when the index `i` is greater than the number of elements in the vector. Thus, the while loop should continue if `wt` is less than 25, and if `i` is less than or equal to the length of the vector.
 
 ```{r}
 i <- 1
@@ -214,9 +216,9 @@ wt
 
 ### Counting Indices
 
-How many integers, starting from 1 and increasing, does it take to add to 10? 
+How many integers, starting from 1 and increasing, does it take to cumulatively add to 10? 
 
-This question can be answered with a while loop. We can set up two variables: `total` to keep track of the sum of the numbers and `num` to keep track of the number we are on for a particular iteration. The logical expression will check if the total is less than 10, meaning the loop will stop when it reaches 10. 
+This question can be answered with a while loop. We can set up two variables: "total" to keep track of the cumulative sum of the numbers, and "num" to keep track of the number we are on for a particular iteration. The logical expression will check if the total is less than 10, meaning the loop will stop when it reaches or surpasses 10. 
 
 Within the while loop we will add `num` to the `total`, and then increase `num` by 1 to move on to the next integer.
 
@@ -257,9 +259,9 @@ Let's examine the values of `total` and `num` at the start and end of each itera
     START: `total` = 10; `num` = 5
     STOPPING CONDITION MET
 
-Because the value of `num` is increased at the end of the loop, the `total` does not yet contain `num`. So the value of `num` after the loop stops running does not tell us how many integers it takes to add to 10. 
+Because the value of `num` is increased at the *end* of the loop, the `total` does not yet contain `num` during the fourth iteration. So the value of `num` after the loop stops running does not tell us how many integers it takes to add to 10. 
 
-How do we fix this? When you need to count indices in a while loop, we instead start with the index counter (in this case `num`) set to *zero*, and increase the value of the index counter at the *start* of the loop (before `num` is used to update `total`):
+How do we fix this? When you need to count indices in a while loop, we instead start with the index counter (in this case `num`) set to *zero*, and increase the value of the index counter at the *start* of the loop (before `num` is used to update `total`).
 
 ```{r}
 total <- 0
@@ -284,7 +286,7 @@ This way the value of `num` represents the last value that was used when the sto
 
 ### Half of the Total RNA
 
-Let's look at a practical example of while loops in biological research. We will be using the same data set as the one we used in Supplement 6.1: brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain):
+Let's look at a practical example of while loops in biological research. We will be using the same data set as the one we used in Supplement 6.1: brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain).
 
 ```{r}
 brain_expression <- read.csv("/home/jovyan/Week.6/6.1.While.Loops/brain_expression.csv", stringsAsFactors = FALSE)
@@ -319,7 +321,7 @@ expr_sorted <- sort(tissue_expression_example$expression, decreasing = TRUE)
 expr_sorted
 ```
 
-Now we can create a while loop to sum up the values, starting from the value at index 1, until we get to half the total expression. The while loop will continue to add expression values to `cumulative_expr` until it passes the value of half the total expression. We will use the technique of increasing the index at the start of the loop so that at the end we can interpret the index as the number of genes:
+Now we can create a while loop to sum up the values, starting from the value at index 1, until we get to half the total expression (15.69). The while loop will continue to add expression values to `cumulative_expr` until it passes the value of half the total expression. We will use the technique of increasing the index at the *start* of the loop and starting our index at 0, so that after all iterations are complete we can interpret the index as the number of genes.
 
 ```{r}
 cumulative_expr <- 0
@@ -334,9 +336,9 @@ index
 With our small example we can easily verify that this is correct:
 
 ```{r}
-"Sum of two most expressed genes:"
+"Sum of the two most expressed genes:"
 7.51 + 6.34
-"Sum of three most expressed genes:"
+"Sum of the three most expressed genes:"
 7.51 + 6.34 + 5.67
 ```
 
@@ -369,6 +371,6 @@ What percentage of genes is this?
 100*index/length(midbrain_expr_sorted)
 ```
 
-Just 18.7% of all genes account for half of the total expression in the midbrain. 
+Just over 18% of all genes account for half of the total expression in the midbrain. 
 
 ---

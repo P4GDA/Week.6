@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ---
 
-## 6.1.1: Introduction to For Loops
+## 6.1.1 Introduction to For Loops
 
 ---
 
@@ -44,7 +44,7 @@ Or we could streamline the to-do list:
       - Add 10 uL of lysis buffer to X
       - Place X on ice
 
-These two to-do lists are exactly the same--both outline the same set of tasks to be performed--but by using X to represent each individual sample, we can save ourselves a lot of excess writing. 
+These two to-do lists are exactly the same - both outline the same set of tasks to be performed - but by using X to represent each individual sample, we can save ourselves a lot of excess writing. 
       
 ---
 
@@ -56,7 +56,7 @@ In computer programming, *loops* perform repetitive tasks. A *for loop* performs
       ... code block ...
     }
 
-This is equivalent to saying: "for each item i in the set of items, execute this code block"
+This is equivalent to saying: "for each item i in the set of items, execute this code block".
 
 The syntax of a for loop will look similar to the syntax for conditional statements. As with conditional statements, the code within the curly braces is preceded by a tab for greater clarity when reading code. 
 
@@ -93,13 +93,13 @@ for (x in c(1,3,5)) {
 
 **Note that like conditional statements, we need to use the print function inside the curly braces**
 
-Internally, this for loop runs the exact same code as the previous code block. A for loop will run once for each item in the set of items (in this for loop, that's three times). Each time it runs for an item it is called an *iteration* of the loop. In the first iteration, the variable `x` will take on the value of the first item in the set (`1`), and then the code inside will be executed In the second iteration, `x` will take on the value of the second item in the set (`3`), and then the code inside will be executed. Finally, `x` will take on the value of the third item in the set (`5`) and the code inside will be executed.
+Internally, this for loop runs the exact same code as the previous code block. A for loop will run once for each item in the set of items (in this for loop, that's three times). Each time it runs for an item it is called an *iteration* of the loop. In the first iteration, the variable `x` will take on the value of the first item in the set (1), and then the code inside will be executed In the second iteration, `x` will take on the value of the second item in the set (3), and then the code inside will be executed. Finally, `x` will take on the value of the third item in the set (5) and the code inside will be executed.
 
 For loops save you time and space when writing code, as you don't have to write the same code over and over again.
 
 ---
 
-## 6.1.2: For Loop Techniques
+## 6.1.2 For Loop Techniques
 
 ---
 
@@ -112,7 +112,7 @@ For loops can be used to alter existing data structures, including:
 - Editing each value in a data frame column
 Etc.
 
-Let's look at an example of adding elements to a vector. First let's create an empty vector called "celsius":
+Let's look at an example of adding elements to a vector. First let's create an empty vector named "celsius":
 
 ```{r}
 celsius <- c()
@@ -121,7 +121,7 @@ celsius
 
 Empty vectors output `NULL` as they do not have a value. 
 
-Now we can use a for loop to add elements to the vector. The for loop below takes a vector that contains three temperatures in Kelvin as its set of items. At each iteration of the loop, the current temperature is assigned to the variable `temp`. 
+Now we can use a for loop to add elements to the vector. The for loop below takes a vector that contains three temperatures in Kelvin as its set of items. At each iteration of the loop, the current temperature is assigned to the variable "temp". 
 
 This first line of code within the curly braces converts the temperature from Kelvin to Celsius by subtracting 273.15 degrees. The second line adds the new value to end of the `celsius` vector with the combine function, and the last line outputs the current value of the `celsius` vector.
 
@@ -150,7 +150,7 @@ mouse_wts <- c(23.7, 21.4, 26.8, 28.3)
 mouse_samples <- c()
 ```
 
-The `paste()` function takes character values and a separator value to combine multiple character values into value, each separated by the separator value. For example, to add together the words "sample", "A", and "control" separated by dashes we can use the `paste()` function: 
+The `paste()` function takes character values and a separator value to combine multiple character values into value, each separated by the separator value. For example, to add together the words "sample", "A", and "control" separated by dashes we can do: 
 
 ```{r}
 paste("sample", "A", "control", sep="-")
@@ -170,9 +170,9 @@ When we look at the value of `mouse_samples`, we can see that we have a vector w
 
 Another reason to loop through the positional indices of a vector is to be able to access both the index AND the value of each element.
 
-For example, if we want to go through each of the elements in this vector of mouse samples and edit (replace) each value based on the current value, we need to be able to access value as well as the index of the value. The index allows us to replace the value at the correct index.If we only know an element value, we cannot access the index, but if we know the positional index of an element we can also access the value. 
+For example, if we want to go through each of the elements in this vector of mouse samples and edit (replace) each value, we need to be able to access the value itself as well as the index of the value. The index allows us to replace the value at the correct index of our data structure. If we only know an element value, we cannot access the index, but if we know the positional index of an element we can also access the value. 
 
-For example, to replace each sample name with a shortened version by replacing the letters "ouse" with "", we need the value of the sample name for replacement, and the index of the sample name to assign the new name.
+For example, to replace each sample name with a shortened version by replacing the letters "ouse" with "", we need the value of the sample name for replacement, as well as the index of the sample name to assign the new name at the correct position in our vector:
 
 ```{r}
 for (i in 1:length(mouse_samples)) {
@@ -183,9 +183,9 @@ for (i in 1:length(mouse_samples)) {
 mouse_samples
 ```
 
-At the start of the above loop we retrieve the value at the index, so that in each iteration, `i` contains the index and `sample` contains the value at that index. With `gsub()` we can replace the letters "ouse" in `sample` with nothing, shortening the sample name. Finally, we can use the index again to replace the value in `mouse_samples` at the appropriate index with the new shortened name. 
+At the start of the above loop we retrieve the value at the current index, so that in each iteration, `i` contains the index and `sample` contains the value at that index. With `gsub()` we replaced the letters "ouse" in `sample` with nothing, shortening the sample name. Finally, we used the index again to replace the value in `mouse_samples` at the appropriate index with the new shortened name. 
 
-Using the `mouse_samples` vector, names can be added to the `mouse_wts` vector:
+Using the updated `mouse_samples` vector, names can be added to the `mouse_wts` vector:
 
 ```{r}
 names(mouse_wts) <- mouse_samples
@@ -204,7 +204,7 @@ mouse_wts
 
 ---
 
-## 6.1.3: For Loop Applications
+## 6.1.3 For Loop Applications
 
 ---
 
@@ -224,7 +224,7 @@ brain_tissues <- colnames(brain_expression)[2:11]
 brain_tissues
 ```
 
-To calculate the correlation (R) of tissue expression in the amygdala and the thalamus, the `cor()` function can be used. 
+To calculate the correlation (R) of tissue expression in the amygdala and the thalamus, the `cor()` function can be used:
 
 ```{r}
 r <- cor(brain_expression[, "amygdala"], brain_expression[, "thalamus"])
@@ -234,11 +234,9 @@ paste("amygdala and thalamus:", r)
 
 To output the correlation in a readable format, the correlation was also rounded and the `paste()` function was used. Note that the default value for the `sep` argument in the `paste()`  function is a single space " ".
 
-If we want to calculate the correlation in gene expression between the amygdala and each of the other brain tissues (including itself), we could write out the above code 10 times for a total of 30 lines of code.
+If we want to calculate the correlation in gene expression between the amygdala and each of the other brain tissues (including itself), we could write out the above code 10 times for a total of 30 lines of code. Alternatively, we can loop through each tissue using a for loop and calculate the correlation between the tissue in the current iteration and the amygdala.
 
-Alternatively, we can loop through each tissue using a for loop and calculate the correlation between the tissue in the current iteration and the amygdala.
-
-For this loop, our items will be each of the elements the `brain_tissues` vector. In each iteration, we can determine the correlation between the amygdala and the iteration tissue by retrieving the values in both columns and using them as arguments to the `cor()` function. Then the resulting correlation is rounded and output using the `print()` and `paste()` functions to provide information about which tissues are being compared:
+For this loop, our items will be each of the elements in the `brain_tissues` vector. In each iteration, we can determine the correlation between the amygdala and the iteration tissue by retrieving the values in both columns and using them as arguments in the `cor()` function. Then the resulting correlation is rounded and output using the `print()` and `paste()` functions to provide information about which tissues are being compared:
 
 ```{r}
 for (tissue in brain_tissues) {
@@ -248,7 +246,7 @@ for (tissue in brain_tissues) {
 }
 ```
 
-This is much easier than writing the 30 lines of code that would be needed otherwise.
+This is much easier than writing the 30 lines of code that would be needed if we didn't use a for loop.
 
 ---
 
@@ -256,9 +254,9 @@ This is much easier than writing the 30 lines of code that would be needed other
 
 So far we have been writing loops to iterate through vectors or vector indices. It is often also helpful to loop through data frame row indices. This allows you to access all of the values in a particular row within the loop.
 
-The hindbrain is composed of the pons, the medulla oblongata, and the cerebellum. In the `brain_expression` data frame, there is one column for `cerebellum` and one for `pons.and.medulla`. If we wanted to know the maximum expression of each gene in any component of the hindbrain, we could add a new column to contain the maximum expression of each gene. To do this we will need to determine the highest expression of the "cerebellum" column value and the "pons.and.medulla" column value.
+The hindbrain is composed of the pons, the medulla oblongata, and the cerebellum. In the `brain_expression` data frame, there is one column for `cerebellum` and one for `pons.and.medulla`. If we wanted to know the maximum expression of each gene in any component of the hindbrain, we could add a new column to contain the maximum expression of each gene. To do this we will need to determine the highest expression of the `cerebellum` column value and the `pons.and.medulla` column value.
 
-First, we can add a new column called "hindbrain.max" to the `brain_expression` data frame with all values equal to `NA`. The for loop iterates through each row index in `brain_expression`, retrieves the maximum value for that row between the two columns, and assigns the higher value to the `hindbrain.max` column for the row currently being iterated:
+First, we can add a new column called "hindbrain.max" to the `brain_expression` data frame with all values equal to `NA`. The for loop iterates through each row index in `brain_expression`, retrieves the maximum value for that row between the `cerebellum` and `pons.and.medulla` columns, and assigns the higher value of the two to the `hindbrain.max` column for the row currently being iterated:
 
 ```{r}
 brain_expression$hindbrain.max <- NA
@@ -268,5 +266,7 @@ for (row in 1:nrow(brain_expression)) {
 }
 brain_expression
 ```
+
+You may have to use the top arrow by the column names to see the newly filled `hindbrain.max` column.
 
 ---
