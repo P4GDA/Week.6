@@ -68,7 +68,7 @@ tissues
 Use a for loop to create a vector named "median_tissue_expression" where each element is named with the name of the tissue, and the value is the median expression for that tissue.
 Hint: The `median()` function returns the median of a vector: `vec_median <- median(vector_name)`
 
-```{r Assignment.W7.1.a}
+```{r Assignment.W6.1.a}
 # Write and execute your code here
 
 ```
@@ -86,7 +86,7 @@ Hints:
 - If `i` is a row index, `which.max(GTEx_data[i, tissues])` will return the index of the highest value in the row.
 - The vector `tissues` has, in order, the column names of the GTEx columns that contain the expression data.
 
-```{r Assignment.W7.1.b}
+```{r Assignment.W6.1.b}
 # Write and execute your code here
 
 ```
@@ -103,7 +103,7 @@ The file "gene.types.txt" contains gene IDs and the type of each gene. This can 
 - *"nonCoding"* : the gene does not code for a protein. This includes lncRNAs (long non-coding RNAs), rRNAs (ribosomal RNAs), and tRNAs (transfer RNAs)
 - *"pseudo"* : the gene is a pseudogene, a nonfunctional DNA segment that resembles a gene. It does not code for a protein but can still be transcribed
 
-```{r Assignment.W7.1.c}
+```{r}
 gene_types <- read.table("/home/jovyan/Week.6/Assignment.6/gene.types.txt", 
                          stringsAsFactors = FALSE, sep = "\t", header = TRUE)
 gene_types
@@ -115,7 +115,7 @@ Hint: The following code will return `TRUE` if "gene" is in `gene_types`, and `F
   
     "gene" %in% gene_types$gene.ID
 
-```{r}
+```{r Assignment.W6.1.c}
 # Write and execute your code here
 
 ```
@@ -137,7 +137,7 @@ Check your matrix with these examples for liver tissue:
 - 516 pseudo genes have an expression value > 1: 
     `tissue_exp_gene_type["pseudo", "liver"]` should equal 516
 
-```{r Assignment.W7.1.d}
+```{r Assignment.W6.1.d}
 tissue_exp_gene_type <- matrix(data=NA, nrow=3, ncol=54)
 colnames(tissue_exp_gene_type) <- tissues
 rownames(tissue_exp_gene_type) <- c("coding", "nonCoding", "pseudo")
@@ -158,7 +158,7 @@ rownames(tissue_exp_gene_type) <- c("coding", "nonCoding", "pseudo")
 (3 marks)
 The data frame below `GTEx_data_Lymphocytes_desc` contains the same data as `GTEx_data` but the genes are arranged in descending order according to their expression in lymphocytes. This means that the gene most highly expressed in lymphocytes is in row 1, the second most highly expressed gene in lymphocytes is in row 2, etc.
 
-```{r Assignment.W7.2.a}
+```{r Assignment.W6.2.a}
 GTEx_data_Lymphocytes_desc <- arrange(GTEx_data, desc(Lymphocytes))
 GTEx_data_Lymphocytes_desc
 ```
@@ -186,7 +186,7 @@ Hint: "Lymphocytes" is column 25, so to get all the columns for the other 53 tis
 To check if all the tissues other than lymphocytes are not expressed for a given row (`row`): 
   `all(GTEx_data_Lymphocytes_desc[i, c(3:24, 26:56)] < 1)`
 
-```{r Assignment.W7.2.b}
+```{r Assignment.W6.2.b}
 # Write and execute your code here
 
 ```
@@ -206,7 +206,7 @@ For this question you can use loops or vectorized methods (your mark will not be
 (1 mark)
 Use either type of loop or vectorized code to create a vector named "mean_tissue_expression". Each element should be named with the name of the tissue, and the value should be the mean tissue expression in the `GTEx_data` data frame.
 
-```{r Assignment.W7.3.a}
+```{r Assignment.W6.3.a}
 # Write and execute your code here
 
 ```
@@ -220,7 +220,7 @@ Use either type of loop or vectorized code to create a vector named "mean_tissue
 (2 marks)
 Use either type of loop or vectorized code to identify the gene with the highest expression in the kidney cortex ("Kidney.Cortex") that is not expressed below 1 in the kidney medulla ("Kidney.Medulla") in the `GTEx_data` data frame. Assign the name of the gene to a variable named "top_gene_cortex_not_medulla".
 
-```{r Assignment.W7.3.b}
+```{r Assignment.W6.3.b}
 # Write and execute your code here
 
 ```
@@ -236,7 +236,7 @@ Use either type of loop or vectorized code to determine the mean and standard de
 Put the mean and standard deviation into a vector named "pseudogene_cerebellum_stats" (mean should be at index 1, standard deviation at index 2, and elements should NOT have names). 
 Hint: Use the functions `mean()` and `sd()`
 
-```{r Assignment.W7.3.c}
+```{r Assignment.W6.3.c}
 # Write and execute your code here
 
 ```
