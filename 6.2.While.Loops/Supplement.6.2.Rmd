@@ -286,7 +286,7 @@ This way the value of `num` represents the last value that was used when the sto
 
 ### Half of the Total RNA
 
-Let's look at a practical example of while loops in biological research. We will be using the same data set as the one we used in Supplement 6.1: brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain).
+Let's look at a practical example of while loops in biological research. We will be using the same data set as the one we used in supplement 6.1: brain tissue expression data sourced from the Human Protein Atlas (https://www.proteinatlas.org/humanproteome/brain).
 
 ```{r}
 brain_expression <- read.csv("/home/jovyan/Week.6/6.1.While.Loops/brain_expression.csv", stringsAsFactors = FALSE)
@@ -342,7 +342,7 @@ With our small example we can easily verify that this is correct:
 7.51 + 6.34 + 5.67
 ```
 
-It takes 3 genes to surpass half of the total expression (15.69). Thus, three genes account for half of the total expression in this tissue.
+It takes three genes to surpass half of the total expression (15.69). Thus, three genes account for half of the total expression in this tissue.
 
 Now let's look at a real example: What is the minimum number of genes that account for 50% of the total RNA in the midbrain? 
 

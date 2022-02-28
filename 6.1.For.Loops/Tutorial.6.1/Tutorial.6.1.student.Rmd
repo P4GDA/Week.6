@@ -26,7 +26,7 @@ At the end of this tutorial you should be able to:
 
 ---
 
-## 6.1.1: Introduction to For Loops
+## 6.1.1 Introduction to For Loops
 
 ---
 
@@ -38,7 +38,7 @@ for (num in c(3, 9, 27, 81, 243)) {
 }
 ```
 
-Assign the elements that the for loop above will iterate through to a variable called "elements".
+Assign the elements that the for loop above will iterate through to a variable named "elements".
 
 ```{r}
 # Write and execute your code here
@@ -50,7 +50,7 @@ Assign the elements that the for loop above will iterate through to a variable c
 ```
 **Check your answer by running the above block** 
 
-Assign the number of iterations in the for loop above to a variable called "iterations".
+Assign the number of iterations in the for loop above to a variable named "iterations".
 
 ```{r}
 # Write and execute your code here
@@ -62,7 +62,7 @@ Assign the number of iterations in the for loop above to a variable called "iter
 ```
 **Check your answer by running the above block** 
 
-If during the 3rd iteration you looked at the value of the variable `num`, what would it be? Assign your answer to a variable called "num_3rd_iter".
+If during the third iteration you looked at the value of the variable `num`, what would it be? Assign your answer to a variable named "num_3rd_iter".
 
 ```{r}
 # Write and execute your code here
@@ -76,11 +76,12 @@ If during the 3rd iteration you looked at the value of the variable `num`, what 
 
 ---
 
-## 6.1.2: For Loop Techniques
+## 6.1.2 For Loop Techniques
 
 ---
 
-Write a for loop that replaces each number in `num_vect` with the square root of the number. Hint: iterate through the vector index.
+Write a for loop that replaces each number in `num_vect` with the square root of the number. 
+Hint: iterate through the vector index.
 
 ```{r}
 num_vect <- c(1, 4, 9, 16, 25, 36, 49, 64, 81, 100)
@@ -102,7 +103,7 @@ Both steps should be completed within your loop.
 
 Hint: iterate through the values of `cancer_types`. To count the number of values in a vector that match a specific value you can use:
 
-    length(which(vector == value))
+    length(which(vector_name == value))
     
 ```{r}
 patient_cancer_types <- c("colon", "breast", "pancreatic", "gastric",  "gastric", "breast",  "pancreatic", "gastric",  "gastric",  "gastric", "colon", "colon", "breast", "pancreatic", "pancreatic", "colon", "gastric", "colon", "gastric", "breast")
@@ -122,13 +123,13 @@ patients_per_cancer_type <- c()
 
 ---
 
-The Fibonacci sequence is a sequence of numbers in which each number is the sum of the previous two numbers. The following vector contains the first 4 numbers in the Fibonacci Sequence. As you can see, the 3rd number in the sequence is 1, which is the sum of the prior two numbers (0 + 1), and the 4th number in the sequence is 2, which is the sum of the prior two numbers (1 + 1).
+The Fibonacci sequence is a sequence of numbers in which each number is the sum of the previous two numbers. The following vector contains the first four numbers in the Fibonacci Sequence. As you can see, the third number in the sequence is 1, which is the sum of the prior two numbers (0 + 1), and the fourth number in the sequence is 2, which is the sum of the prior two numbers (1 + 1).
 
 ```{r}
 fibonacci_sequence <- c(0, 1, 1, 2)
 ```
 
-Write a for loop to add the next 8 numbers to the `fibonacci_sequence` vector. Hint: this will mean you need to add numbers at the 5th-12th indices.
+Write a for loop to add the next eight numbers to the `fibonacci_sequence` vector. Hint: this will mean you need to add numbers at the 5th-12th indices.
 
 ```{r}
 # Write and execute your code here
@@ -142,7 +143,7 @@ Write a for loop to add the next 8 numbers to the `fibonacci_sequence` vector. H
 
 ---
 
-## 6.1.3: For Loop Applications
+## 6.1.3 For Loop Applications
 
 ---
 
@@ -158,7 +159,8 @@ The dataset we will use includes all the variants on ClinVar associated with the
 Upload and view the data set with the code below. A vector called `diseases` has also been created for you to use in the following questions.
 
 ```{r}
-diseases <- c("cystic.fibrosis", "duchenne.muscular.dystrophy", "glaucoma", "pheynlketonuria", "type.2.diabetes")
+diseases <- c("cystic.fibrosis", "duchenne.muscular.dystrophy", "glaucoma", 
+              "pheynlketonuria", "type.2.diabetes")
 clinvar_data <- read.csv("/home/jovyan/Week.6/6.1.For.Loops/Tutorial.6.1/clinvar_data.csv",
                          stringsAsFactors = FALSE)
 clinvar_data
@@ -191,7 +193,8 @@ What percentage of variants for each disease is pathogenic or likely pathogenic?
 To answer this question, write a for loop to fill the vector `percent_pathogenic_variants` below:
 - Each element should be the percentage of pathogenic or likely pathogenic variants in a disease
 - Each element should be named with the disease name
-Both steps should be completed within your loop. Hint: you can iterate through the previously generated `diseases` vector and use the information in your new `pathogenic` column.
+Both steps should be completed within your loop. 
+Hint: you can iterate through the previously generated `diseases` vector and use the information in your new `pathogenic` column.
 
 ```{r}
 percent_pathogenic_variants <- c()
@@ -211,7 +214,8 @@ Before you complete the next question, let's learn the function `n_distinct()`. 
 ```{r}
 # There are 48 variants in the MYOC gene
 # These variants have 3 distinct types of clinical significance
-n_distinct(clinvar_data %>% filter(gene == "MYOC") %>% select(clinical.significance))
+n_distinct(clinvar_data %>% filter(gene == "MYOC") %>% 
+             select(clinical.significance))
 ```
 
 For each disease, how many unique genes have a pathogenic variant associated with the disease? Which disease can be caused by the most genes (according to this data set)?

@@ -111,7 +111,7 @@ colnames(tissue_expr_cor) <- brain_tissues
 tissue_expr_cor
 ```
 
-In Supplement 6.1 we calculated the correlation in gene expression between the amygdala and each of the other brain tissues (including itself). Let's repeat this, but for all pairings of all 10 tissues. We can use nested for loops: first looping through the row names of the matrix and then through the column names. Within each iteration we can calculate the expression correlation between the two tissues, round it, and add the value to our `tissue_expr_cor` matrix in the appropriate spot:
+In supplement 6.1 we calculated the correlation in gene expression between the amygdala and each of the other brain tissues (including itself). Let's repeat this, but for all pairings of all 10 tissues. We can use nested for loops: first looping through the row names of the matrix and then through the column names. Within each iteration we can calculate the expression correlation between the two tissues, round it, and add the value to our `tissue_expr_cor` matrix in the appropriate spot:
 
 ```{r}
 for (rowname in rownames(tissue_expr_cor)) {
@@ -130,9 +130,9 @@ tissue_expr_cor
 
 We can also nest while loops within while loops, for loops within while loops, and while loops within for loops. Let's look at an example of the latter. 
 
-In the Supplement 6.2 we calculated the minimum number of genes that accounted for 50% of the RNA expression in the midbrain, and used that value to determine the percentage of genes that accounted for 50% of the RNA. How could we calculate the percentage of genes that accounted for 50% of the expression for all 10 tissues? 
+In supplement 6.2 we calculated the minimum number of genes that accounted for 50% of the RNA expression in the midbrain, and used that value to determine the percentage of genes that accounted for 50% of the RNA. How could we calculate the percentage of genes that accounted for 50% of the expression for all 10 tissues? 
 
-We could use a for loop to go through the tissues, and a while loop to get the number of genes. We will start with an empty vector "percent_genes_for_half_RNA" to store our final gene percentages for each tissue. Within the for loop, we will sort expression values for the current tissue and determine half of the expression. Using the same nested while loop that we used in the Supplement 6.2, we will calculate the number of genes it takes to make up 50% of the expression for the tissue. After the while loop terminates, we can calculate and add the percentage to our results vector within the for loop before starting on the next tissue iteration.
+We could use a for loop to go through the tissues, and a while loop to get the number of genes. We will start with an empty vector "percent_genes_for_half_RNA" to store our final gene percentages for each tissue. Within the for loop, we will sort expression values for the current tissue and determine half of the expression. Using the same nested while loop that we used in supplement 6.2, we will calculate the number of genes it takes to make up 50% of the expression for the tissue. After the while loop terminates, we can calculate and add the percentage to our results vector within the for loop before starting on the next tissue iteration.
 
 In previous nested loops we did not include any code in between the declaration of the outer and inner loops, but we can write code that occurs for each item in the outer loop before running the inner loop.
 
@@ -168,7 +168,7 @@ When we look at the output we can see that for all of the tissues, around 18-21%
 
 ### Non-vectorized vs Vectorized Code
 
-In the Supplement 6.1 we looked at a real-life example that is similar to a for loop: a scientist is working in the lab with six samples, and for each sample the scientist needs to add 10 uL of lysis buffer and then place the sample on ice:
+In supplement 6.1 we looked at a real-life example that is similar to a for loop: a scientist is working in the lab with six samples, and for each sample the scientist needs to add 10 uL of lysis buffer and then place the sample on ice:
 
     For X in sample 1, sample 2, sample 3, sample 4, sample 5, sample 6:
       - Add 10 uL of lysis buffer to X
@@ -278,7 +278,7 @@ How do you know when to use a loop or vectorized code? Here is a good guideline:
          |--- NO  -> use a for loop
          |--- YES -> use a vectorized function
       
-There is also a way to write your own vectorized functions. While we will not be focusing on the method in this course, it will be briefly covered in Supplement 7.1.
+There is also a way to write your own vectorized functions. While we will not be focusing on the method in this course, it will be briefly covered in supplement 7.1.
 
 Let's look at some practical examples in which we can use vectorized code using the brain tissue expression data.
 
